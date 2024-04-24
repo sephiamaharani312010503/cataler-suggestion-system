@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
 
-const AllStateContext = createContext();
+const SessionContext = createContext();
 
-export const AllStateProvider = ({ children }) => {
+export const SessionContextProvider = ({ children }) => {
   const { data: session } = useSession();
 
   const contextValue = {
@@ -15,14 +15,14 @@ export const AllStateProvider = ({ children }) => {
   };
 
   return (
-    <AllStateContext.Provider value={contextValue}>
+    <SessionContext.Provider value={contextValue}>
       {children}
-    </AllStateContext.Provider>
+    </SessionContext.Provider>
   );
 };
 
-export const useAllStateContext = () => {
-  const context = useContext(AllStateContext);
+export const useSessionContext = () => {
+  const context = useContext(SessionContext);
   if (!context) {
     throw new Error("Error accessing context");
   }
