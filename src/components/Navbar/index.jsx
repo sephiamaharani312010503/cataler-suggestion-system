@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 const Navbar = () => {
   const { showMenu, setShowMenu } = useAllStateContext();
@@ -51,7 +50,7 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        <span className="me-2">
+        <span className="me-2 md:hidden">
           <FontAwesomeIcon
             icon={faBars}
             size="lg"

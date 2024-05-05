@@ -1,9 +1,14 @@
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext } from "react";
+import React, {
+  createContext,
+  useContext,
+} from "react";
 
 const SessionContext = createContext();
 
-export const SessionContextProvider = ({ children }) => {
+export const SessionContextProvider = ({
+  children,
+}) => {
   const { data: session } = useSession();
 
   const contextValue = {
@@ -12,6 +17,7 @@ export const SessionContextProvider = ({ children }) => {
     userNik: session?.user.nik,
     userJabatan: session?.user.jabatan,
     userDepartemen: session?.user.departemen,
+    userRole: session?.user.role,
   };
 
   return (

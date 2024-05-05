@@ -1,11 +1,16 @@
-import React, { createContext, useContext } from "react";
+import React, {
+  createContext,
+  useContext,
+} from "react";
 import { useAllStateContext } from "./AllStateContext";
 import { useSessionContext } from "./SessionContext";
 import axios from "axios";
 
 const SuggestionDataContext = createContext();
 
-export const SuggestionDataContextProvider = ({ children }) => {
+export const SuggestionDataContextProvider = ({
+  children,
+}) => {
   const { userNik } = useSessionContext();
   const {
     title,
@@ -34,6 +39,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsModalAddSuggestionOpen,
     setIsAddBtnLoading,
     setIsEditBtnLoading,
+    setIsDeleteBtnLoading,
   } = useAllStateContext();
 
   const handleRadioChange = (value) => {
@@ -45,24 +51,31 @@ export const SuggestionDataContextProvider = ({ children }) => {
   };
 
   const handleDeleteSuggestionModal = () => {
-    setIsModalSuggestionDeleteOpen(!isModalSuggestionDeleteOpen);
+    setIsModalSuggestionDeleteOpen(
+      !isModalSuggestionDeleteOpen
+    );
   };
 
   const handleAddSuggestionModal = () => {
-    setIsModalAddSuggestionOpen(!isModalAddSuggestionOpen);
+    setIsModalAddSuggestionOpen(
+      !isModalAddSuggestionOpen
+    );
   };
 
   const addSuggestion = async (event) => {
     event.preventDefault();
     try {
       setIsAddBtnLoading(true);
-      await axios.post("/api/suggestionData/addSuggestion", {
-        title: title,
-        currentCondition: currentCondition,
-        suggestion: suggestion,
-        userNik: userNik,
-        category: category,
-      });
+      await axios.post(
+        "/api/suggestionData/addSuggestion",
+        {
+          title: title,
+          currentCondition: currentCondition,
+          suggestion: suggestion,
+          userNik: userNik,
+          category: category,
+        }
+      );
       setIsAddBtnLoading(false);
       setIsModalAddSuggestionOpen(false);
       setTitle("");
@@ -79,13 +92,17 @@ export const SuggestionDataContextProvider = ({ children }) => {
     event.preventDefault();
     try {
       setIsEditBtnLoading(true);
-      await axios.patch("/api/suggestionData/updateSuggestion", {
-        docId: docId,
-        category: selectedCategory,
-        title: selectedTitle,
-        currentCondition: selectedCurrentCondition,
-        suggestion: selectedSuggestion,
-      });
+      await axios.patch(
+        "/api/suggestionData/updateSuggestion",
+        {
+          docId: docId,
+          category: selectedCategory,
+          title: selectedTitle,
+          currentCondition:
+            selectedCurrentCondition,
+          suggestion: selectedSuggestion,
+        }
+      );
       setIsEditBtnLoading(false);
       getAllSuggestion();
     } catch (error) {
@@ -95,10 +112,15 @@ export const SuggestionDataContextProvider = ({ children }) => {
 
   const getAllSuggestion = async () => {
     try {
-      const response = await axios.get("/api/suggestionData/getAllSuggestion");
+      const response = await axios.get(
+        "/api/suggestionData/getAllSuggestion"
+      );
       setAllSuggestion(response.data);
     } catch (error) {
-      console.error("Error fetching all suggestions:", error);
+      console.error(
+        "Error fetching all suggestions:",
+        error
+      );
     }
   };
 
@@ -110,17 +132,28 @@ export const SuggestionDataContextProvider = ({ children }) => {
       );
       setDocId(itemId);
       setSelectedTitle(response.data.title);
-      setSelectedCurrentCondition(response.data.currentCondition);
-      setSelectedSuggestion(response.data.suggestion);
+      setSelectedCurrentCondition(
+        response.data.currentCondition
+      );
+      setSelectedSuggestion(
+        response.data.suggestion
+      );
       setSelectedCategory(response.data.category);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error(
+        "Error fetching data:",
+        error
+      );
     }
   };
 
   const deleteSuggestion = async () => {
     try {
-      await axios.delete(`/api/suggestionData/deleteSuggestion?docId=${docId}`);
+      setIsDeleteBtnLoading(true);
+      await axios.delete(
+        `/api/suggestionData/deleteSuggestion?docId=${docId}`
+      );
+      setIsDeleteBtnLoading(false);
       setIsModalSuggestionDeleteOpen(false);
       setIsModalSuggestionDetailOpen(false);
       getAllSuggestion();
@@ -142,14 +175,17 @@ export const SuggestionDataContextProvider = ({ children }) => {
   };
 
   return (
-    <SuggestionDataContext.Provider value={contextValue}>
+    <SuggestionDataContext.Provider
+      value={contextValue}>
       {children}
     </SuggestionDataContext.Provider>
   );
 };
 
 export const useSuggestionDataContext = () => {
-  const context = useContext(SuggestionDataContext);
+  const context = useContext(
+    SuggestionDataContext
+  );
   if (!context) {
     throw new Error("Error accessing context");
   }

@@ -2,15 +2,19 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
-import AddSuggestionForm from "./components/addSuggestionForm";
-import UserProfile from "./components/userProfile";
-import AllSuggestion from "./components/allSuggestion";
 import { useSessionContext } from "@/context/SessionContext";
-import AddSuggestionFormMobileView from "./components/addSuggestionFormMobileView.jsx";
+import UserDashboardLayout from "@/components/Layout/UserDashboardLayout";
+import UserDashboardProfileContainer from "@/components/Layout/UserDashboardLayout/UserProfileContainer";
+import UserBiodataWrapper from "@/components/Layout/UserDashboardLayout/UserBiodataWrapper";
+import ProfileImage from "@/views/UserProfileView/ProfileImage";
+import UserProfile from "@/views/UserProfileView";
+import AddSuggestionForm from "@/views/AddSuggestionForm";
+import AllSuggestion from "@/views/AllSuggestionView";
 
 const UserDashboard = () => {
   const router = useRouter();
-  const { getAllSuggestion } = useSuggestionDataContext();
+  const { getAllSuggestion } =
+    useSuggestionDataContext();
   const { session } = useSessionContext();
 
   const checkAuth = async () => {
@@ -29,10 +33,23 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <div className="hidden md:flex md:h-screen">
+      <div className="hidden md:flex ">
         <AddSuggestionForm />
         <div className="hidden md:flex md:flex-col md:w-2/3">
-          <UserProfile />
+          <UserDashboardLayout
+            content={
+              <UserDashboardProfileContainer
+                content={
+                  <>
+                    <ProfileImage />
+                    <UserBiodataWrapper
+                      content={<UserProfile />}
+                    />
+                  </>
+                }
+              />
+            }
+          />
           <AllSuggestion />
         </div>
       </div>

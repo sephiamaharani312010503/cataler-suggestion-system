@@ -27,6 +27,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
     isEditBtnLoading,
     setIsModalAddSuggestionOpen,
     isAddBtnLoading,
+    isDeleteBtnLoading,
   } = useAllStateContext();
 
   const {
@@ -147,7 +148,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
                     <label className="label cursor-pointer">
                       <input
                         onChange={() => handleEditRadioChange("5S")}
-                        checked={category === "5S"}
+                        checked={selectedCategory === "5S"}
                         type="radio"
                         className="radio checked:bg-green-500"
                       />
@@ -241,7 +242,11 @@ export const ModalFunctionContextProvider = ({ children }) => {
               <button
                 onClick={deleteSuggestion}
                 className="btn btn-sm btn-error ms-2">
-                Ya
+                {isDeleteBtnLoading ? (
+                  <span className="loading loading-spinner mr-2"></span>
+                ) : (
+                  "Ya"
+                )}
               </button>
             </div>
           </div>

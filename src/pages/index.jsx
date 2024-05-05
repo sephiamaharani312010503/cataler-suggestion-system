@@ -47,7 +47,7 @@ export default function Home() {
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">NIK</span>
+                <span className="label-text font-bold">NIK</span>
               </label>
               <input
                 type="text"
@@ -59,7 +59,7 @@ export default function Home() {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-bold">Password</span>
               </label>
               <input
                 type="password"
@@ -79,7 +79,7 @@ export default function Home() {
             </div>
             {session ? (
               <Link
-                href={"/user/dashboard"}
+                href={"/dashboard/user"}
                 onClick={() => setShowMenu(false)}
                 className="btn btn-primary text-white font-bold mt-4 md:hidden"
                 disabled={session ? false : true}>
@@ -105,22 +105,29 @@ export default function Home() {
               height={400}
             />
           </div>
-          <p className="font-semibold py-3 px-2">
+          <p className="font-semibold py-3 px-4">
             Situs ini adalah sebuah platform yang menyediakan sarana bagi para
             karyawan untuk memberikan saran, ide, atau kaizen yang
-            berkelanjutan. Melalui platform ini, karyawan dapat berpartisipasi
-            dalam meningkatkan efisiensi sistem kerja dan kinerja perusahaan,
-            serta berkontribusi pada pertumbuhan dan kesuksesan{" "}
+            berkelanjutan. Melalui platform ini, karyawan dapat dimudahkan untuk
+            berpartisipasi dalam meningkatkan efisiensi sistem kerja dan kinerja
+            perusahaan, serta berkontribusi pada pertumbuhan dan kesuksesan{" "}
             <span className="font-bold italic text-teal-600">
               PT Cataler Indonesia.
             </span>
           </p>
           <div className="flex justify-end me-4 mb-3">
             <Link
-              href={"/user/dashboard"}
+              href={"/dashboard/user"}
               className="btn btn-sm btn-primary text-white font-bold"
               disabled={session ? false : true}>
               Dashboard{" "}
+              <FontAwesomeIcon icon={faArrowRight} className="ms-1" size="sm" />
+            </Link>
+            <Link
+              href={"/dashboard/admin"}
+              className="hidden btn btn-sm btn-primary text-white font-bold"
+              disabled={session ? false : true}>
+              Admin Dashboard{" "}
               <FontAwesomeIcon icon={faArrowRight} className="ms-1" size="sm" />
             </Link>
           </div>

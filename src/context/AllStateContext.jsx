@@ -1,31 +1,60 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 const AllStateContext = createContext();
 
-export const AllStateProvider = ({ children }) => {
-  const [allSuggestion, setAllSuggestion] = useState([]);
+export const AllStateProvider = ({
+  children,
+}) => {
+  const [allSuggestion, setAllSuggestion] =
+    useState([]);
   const [docId, setDocId] = useState("");
   const [dateNow, setDateNow] = useState("");
 
   const [category, setCategory] = useState(null);
   const [title, setTitle] = useState("");
-  const [currentCondition, setCurrentCondition] = useState("");
-  const [suggestion, setSuggestion] = useState("");
+  const [currentCondition, setCurrentCondition] =
+    useState("");
+  const [suggestion, setSuggestion] =
+    useState("");
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedCurrentCondition, setSelectedCurrentCondition] = useState("");
-  const [selectedSuggestion, setSelectedSuggestion] = useState("");
+  const [selectedCategory, setSelectedCategory] =
+    useState(null);
+  const [selectedTitle, setSelectedTitle] =
+    useState("");
+  const [
+    selectedCurrentCondition,
+    setSelectedCurrentCondition,
+  ] = useState("");
+  const [
+    selectedSuggestion,
+    setSelectedSuggestion,
+  ] = useState("");
 
-  const [isModalSuggestionDetailOpen, setIsModalSuggestionDetailOpen] =
-    useState(false);
-  const [isModalSuggestionDeleteOpen, setIsModalSuggestionDeleteOpen] =
-    useState(false);
+  const [
+    isModalSuggestionDetailOpen,
+    setIsModalSuggestionDetailOpen,
+  ] = useState(false);
+  const [
+    isModalSuggestionDeleteOpen,
+    setIsModalSuggestionDeleteOpen,
+  ] = useState(false);
 
-  const [isAddBtnLoading, setIsAddBtnLoading] = useState(false);
-  const [isEditBtnLoading, setIsEditBtnLoading] = useState(false);
-  const [isModalAddSuggestionOpen, setIsModalAddSuggestionOpen] =
+  const [
+    isDeleteBtnLoading,
+    setIsDeleteBtnLoading,
+  ] = useState(false);
+  const [isAddBtnLoading, setIsAddBtnLoading] =
     useState(false);
+  const [isEditBtnLoading, setIsEditBtnLoading] =
+    useState(false);
+  const [
+    isModalAddSuggestionOpen,
+    setIsModalAddSuggestionOpen,
+  ] = useState(false);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -64,10 +93,13 @@ export const AllStateProvider = ({ children }) => {
     setIsEditBtnLoading,
     showMenu,
     setShowMenu,
+    isDeleteBtnLoading,
+    setIsDeleteBtnLoading,
   };
 
   return (
-    <AllStateContext.Provider value={contextValue}>
+    <AllStateContext.Provider
+      value={contextValue}>
       {children}
     </AllStateContext.Provider>
   );
