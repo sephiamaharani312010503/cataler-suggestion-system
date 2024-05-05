@@ -31,7 +31,7 @@ const Navbar = () => {
               height={100}
             />
             <p className="text-lg text-teal-500 font-bold italic ms-2 md:text-xl">
-              Suggestion System
+              Kaizen System
             </p>
           </Link>
         </div>
