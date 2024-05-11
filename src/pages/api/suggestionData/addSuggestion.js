@@ -3,14 +3,23 @@ import { addSuggestion } from "@/service/firebase/dataServices/suggestionService
 export default async function handlerAddSuggestion(req, res) {
   if (req.method === "POST") {
     try {
-      const { title, currentCondition, suggestion, userNik, category } =
-        req.body;
+      const {
+        title,
+        currentCondition,
+        suggestion,
+        userNik,
+        userName,
+        category,
+        status,
+      } = req.body;
       await addSuggestion(
         title,
         currentCondition,
         suggestion,
         userNik,
-        category
+        userName,
+        category,
+        status
       );
       res.status(200).json({ message: "Suggestion added successfully" });
     } catch (error) {

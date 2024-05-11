@@ -4,7 +4,7 @@ const Footer = () => {
       <aside>
         <p>
           Copyright © 2024 - All right reserved by
-          <span className="font-bold text-emerald-500">
+          <span className="font-bold text-emerald-500 ms-1">
             Sephia Maharani - Universitas Pelita Bangsa
           </span>
         </p>

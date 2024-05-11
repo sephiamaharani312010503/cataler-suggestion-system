@@ -13,16 +13,13 @@ import AllSuggestion from "@/views/AllSuggestionView";
 
 const UserDashboard = () => {
   const router = useRouter();
-  const { getAllSuggestion } =
-    useSuggestionDataContext();
-  const { session } = useSessionContext();
+  const { getSuggestionByUserName } = useSuggestionDataContext();
+  const { session, userNik } = useSessionContext();
 
   const checkAuth = async () => {
     const session = await getSession();
     if (!session) {
       router.push("/");
-    } else {
-      getAllSuggestion();
     }
   };
 
@@ -30,6 +27,11 @@ const UserDashboard = () => {
     checkAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
+
+  useEffect(() => {
+    getSuggestionByUserName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userNik]);
 
   return (
     <div>
@@ -42,9 +44,7 @@ const UserDashboard = () => {
                 content={
                   <>
                     <ProfileImage />
-                    <UserBiodataWrapper
-                      content={<UserProfile />}
-                    />
+                    <UserBiodataWrapper content={<UserProfile />} />
                   </>
                 }
               />

@@ -6,8 +6,10 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import app from "../init";
 
@@ -18,7 +20,9 @@ export async function addSuggestion(
   currentCondition,
   suggestion,
   userNik,
-  category
+  userName,
+  category,
+  status
 ) {
   try {
     const docRef = collection(firestore, "suggestionData");
@@ -27,7 +31,9 @@ export async function addSuggestion(
       currentCondition: currentCondition,
       suggestion: suggestion,
       userNik: userNik,
+      userName: userName,
       category: category,
+      status: status,
       time: serverTimestamp(),
     });
     return snapshot;
@@ -73,6 +79,22 @@ export async function getAllSuggestion() {
   try {
     const docRef = collection(firestore, "suggestionData");
     const snapshot = await getDocs(docRef);
+    const subSuggestionData = [];
+    snapshot.forEach((doc) => {
+      subSuggestionData.push({ id: doc.id, ...doc.data() });
+    });
+    return subSuggestionData;
+  } catch (error) {
+    console.error("Error fetching document data:", error);
+    throw new Error("Failed to fetch document data from Firestore");
+  }
+}
+
+export async function getSuggestionByUserName(userNik) {
+  try {
+    const docRef = collection(firestore, "suggestionData");
+    const q = query(docRef, where("userNik", "==", userNik));
+    const snapshot = await getDocs(q);
     const subSuggestionData = [];
     snapshot.forEach((doc) => {
       subSuggestionData.push({ id: doc.id, ...doc.data() });

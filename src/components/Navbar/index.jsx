@@ -23,7 +23,9 @@ const Navbar = () => {
             : "navbar shadow-md shadow-gray-400/50 relative"
         }>
         <div className="container flex-1 w-full">
-          <Link href={"/"} className="flex w-full items-center ms-2">
+          <Link
+            href={"/dashboard/user"}
+            className="flex w-full items-center ms-2">
             <Image
               src="/static/assets/logo-single.jpg"
               alt="logo"
@@ -31,7 +33,7 @@ const Navbar = () => {
               height={100}
             />
             <p className="text-lg text-teal-500 font-bold italic ms-2 md:text-xl">
-              Kaizen System
+              E-Kaizen
             </p>
           </Link>
         </div>

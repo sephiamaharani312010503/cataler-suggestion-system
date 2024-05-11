@@ -31,7 +31,7 @@ export default function Home() {
       if (!response?.error) {
         setIsLoading(false);
         form.reset();
-        push(callbackUrl);
+        push("/dashboard/user");
       } else {
         setIsLoading(false);
       }
@@ -115,7 +115,7 @@ export default function Home() {
               PT Cataler Indonesia.
             </span>
           </p>
-          <div className="flex justify-end me-4 mb-3">
+          {/* <div className="flex justify-end me-4 mb-3">
             <Link
               href={"/dashboard/user"}
               className="btn btn-sm btn-primary text-white font-bold"
@@ -130,7 +130,7 @@ export default function Home() {
               Admin Dashboard{" "}
               <FontAwesomeIcon icon={faArrowRight} className="ms-1" size="sm" />
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

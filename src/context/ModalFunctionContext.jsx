@@ -28,6 +28,11 @@ export const ModalFunctionContextProvider = ({ children }) => {
     setIsModalAddSuggestionOpen,
     isAddBtnLoading,
     isDeleteBtnLoading,
+    selectedDate,
+    status,
+    setIsModalAdminSuggestionDetailOpen,
+    selectedName,
+    selectedNik,
   } = useAllStateContext();
 
   const {
@@ -141,6 +146,11 @@ export const ModalFunctionContextProvider = ({ children }) => {
                 ✕
               </button>
             </div>
+            <div className="container flex w-full justify-between mt-4">
+              <p className="text-sm font-semibold">{selectedDate}</p>
+              <p className="text-sm font-semibold me-1">{status}</p>
+            </div>
+            <hr className="mt-1" />
             <form onSubmit={updateSuggestion}>
               <div className="form-control">
                 <div className="flex justify-center mt-3">
@@ -203,7 +213,11 @@ export const ModalFunctionContextProvider = ({ children }) => {
                       onClick={handleDeleteSuggestionModal}
                       type="button"
                       className="btn btn-sm btn-error text-white me-2">
-                      <FontAwesomeIcon icon={faTrashCan} />
+                      {isDeleteBtnLoading ? (
+                        <span className="loading loading-spinner mr-2"></span>
+                      ) : (
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      )}
                     </button>
                     <button
                       type="submit"
@@ -226,6 +240,81 @@ export const ModalFunctionContextProvider = ({ children }) => {
       />
     );
   };
+
+  const modalAdminSuggestionDetail = () => {
+    return (
+      <Modal
+        modalBody={
+          <>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsModalAdminSuggestionDetailOpen(false)}
+                className="me-1">
+                ✕
+              </button>
+            </div>
+            <div className="container flex w-full justify-between mt-4 px-1">
+              <p className="text-sm font-semibold">
+                {selectedName} / {selectedNik}
+              </p>
+              <p className="text-sm font-semibold">
+                Status : <span className="ms-1 ">{status}</span>
+              </p>
+            </div>
+            <hr className="mt-1 px-1" />
+            <div className="container flex w-full justify-between mt-2 px-1">
+              <p className="text-sm font-semibold">
+                Kategori : {selectedCategory}
+              </p>
+              <p className="text-sm font-semibold">{selectedDate}</p>
+            </div>
+            <div className="form-control mt-2">
+              <div className="flex justify-center"></div>
+              <label className="label text-sm">Judul :</label>
+              <input
+                value={selectedTitle}
+                onChange={(e) => setSelectedTitle(e.target.value)}
+                className="input input-sm input-bordered w-full"
+                readOnly
+              />
+              <label className="label text-sm">Kondisi Saat ini :</label>
+              <textarea
+                value={selectedCurrentCondition}
+                onChange={(e) => setSelectedCurrentCondition(e.target.value)}
+                className="textarea textarea-bordered w-full"
+                readOnly
+              />
+              <label className="label text-sm">Saran Yang Diusulkan :</label>
+              <textarea
+                value={selectedSuggestion}
+                onChange={(e) => setSelectedSuggestion(e.target.value)}
+                className="textarea textarea-bordered w-full"
+                readOnly
+              />
+              <label className="label text-sm">Lampiran :</label>
+              <div className="flex justify-between mb-2">
+                <input className="input input-sm input-bordered" />
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleDeleteSuggestionModal}
+                    type="button"
+                    className="btn btn-sm btn-error text-white me-2">
+                    {isDeleteBtnLoading ? (
+                      <span className="loading loading-spinner mr-2"></span>
+                    ) : (
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        }
+      />
+    );
+  };
+
+  const modalStatusDetail = () => {};
 
   const modalDeleteSuggestion = () => {
     return (
@@ -257,6 +346,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
 
   const contextValue = {
     modalSuggestionDetail,
+    modalAdminSuggestionDetail,
     modalDeleteSuggestion,
     modalAddSuggestion,
   };
