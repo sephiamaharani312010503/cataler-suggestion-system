@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useAllStateContext } from "@/context/AllStateContext";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
   const { push, query } = useRouter();
   const { data: session } = useSession();
 
@@ -29,10 +30,17 @@ export default function Home() {
         callbackUrl,
       });
       if (!response?.error) {
+        setIsLoginFailed(false);
         setIsLoading(false);
         form.reset();
-        push("/dashboard/user");
+        const session = await getSession();
+        if (session.user.role === "Admin") {
+          push("/dashboard/admin");
+        } else {
+          push("/dashboard/user");
+        }
       } else {
+        setIsLoginFailed(true);
         setIsLoading(false);
       }
     } catch (error) {
@@ -46,6 +54,13 @@ export default function Home() {
         <div className="card w-full max-w-sm shadow-2xl">
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
+              {isLoginFailed ? (
+                <p className="text-sm text-error text-center">
+                  NIK atau Password Salah!
+                </p>
+              ) : (
+                ""
+              )}
               <label className="label">
                 <span className="label-text font-bold">NIK</span>
               </label>
@@ -93,6 +108,13 @@ export default function Home() {
             ) : (
               ""
             )}
+            <div className="mt-2">
+              <Link
+                href={"/auth/signUp"}
+                className="text-blue-500 link link-hover">
+                Buat Akun!
+              </Link>
+            </div>
           </form>
         </div>
         <div className="hidden md:block md:container md:w-1/2 md:ms-8 md:rounded-2xl md:shadow-2xl">

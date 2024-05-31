@@ -23,7 +23,7 @@ const AllSuggestion = () => {
   return (
     <div className="pe-4 md:pe-8 mb-3">
       <div
-        style={{ height: "392px" }}
+        style={{ height: "390px" }}
         className="container mt-1 ms-2 p-3 border-2 border-gray-300 bg-gray-50 shadow-lg shadow-gray-400/60 rounded-lg">
         <div className="flex items-center justify-between ms-1 mb-2">
           <p className="font-bold mb-2">Saran Anda</p>
@@ -41,7 +41,7 @@ const AllSuggestion = () => {
               <th>No</th>
               <th>Judul</th>
               <th>Tanggal</th>
-              <th>Status</th>
+              <th className="text-center">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -55,10 +55,19 @@ const AllSuggestion = () => {
                 className="cursor-pointer hover:bg-gray-100">
                 <td>{index + 1}</td>
                 <td>{item.title}</td>
-                <td>
-                  {format(new Date(item.time.seconds * 1000), "dd/MM/yyyy")}
+                <td>{format(new Date(item.date), "dd/MM/yyyy")}</td>
+                <td className="text-center">
+                  <div
+                    className={`badge ${
+                      item.status === "ACC"
+                        ? "badge-primary"
+                        : item.status === "Disapprove"
+                        ? "badge-accent"
+                        : "badge-secondary"
+                    }`}>
+                    {item.status}
+                  </div>
                 </td>
-                <td>{item.status}</td>
               </tr>
             ))}
           </tbody>

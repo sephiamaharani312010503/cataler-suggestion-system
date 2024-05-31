@@ -5,8 +5,11 @@ const AllStateContext = createContext();
 export const AllStateProvider = ({ children }) => {
   const [allSuggestion, setAllSuggestion] = useState([]);
   const [allUserSuggestion, setAllUserSuggestion] = useState([]);
+  const [allUserData, setAllUserData] = useState([]);
   const [docId, setDocId] = useState("");
   const [dateNow, setDateNow] = useState("");
+
+  const [userPoint, setUserPoint] = useState("");
 
   const [category, setCategory] = useState(null);
   const [title, setTitle] = useState("");
@@ -14,8 +17,16 @@ export const AllStateProvider = ({ children }) => {
   const [suggestion, setSuggestion] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [status, setStatus] = useState("");
+  const [date, setDate] = useState("");
+
   const [selectedName, setSelectedName] = useState("");
   const [selectedNik, setSelectedNik] = useState("");
+
+  const [editName, setEditName] = useState("");
+  const [editNik, setEditNik] = useState("");
+  const [editJabatan, setEditJabatan] = useState("");
+  const [editDepartemen, setEditDepartemen] = useState("");
+  const [editRole, setEditRole] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -24,20 +35,43 @@ export const AllStateProvider = ({ children }) => {
 
   const [isModalSuggestionDetailOpen, setIsModalSuggestionDetailOpen] =
     useState(false);
+  const [isModalUserDetailOpen, setIsModalUserDetailOpen] = useState(false);
   const [
     isModalAdminSuggestionDetailOpen,
     setIsModalAdminSuggestionDetailOpen,
   ] = useState(false);
   const [isModalSuggestionDeleteOpen, setIsModalSuggestionDeleteOpen] =
     useState(false);
+  const [isModalUserDeleteOpen, setIsModalUserDeleteOpen] = useState(false);
+  const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
 
   const [isDeleteBtnLoading, setIsDeleteBtnLoading] = useState(false);
   const [isAddBtnLoading, setIsAddBtnLoading] = useState(false);
   const [isEditBtnLoading, setIsEditBtnLoading] = useState(false);
   const [isModalAddSuggestionOpen, setIsModalAddSuggestionOpen] =
     useState(false);
+  const [isModalStatusDetailOpen, setIsModalStatusDetailOpen] = useState(false);
+  const [isModalClaimRewardOpen, setIsModalClaimRewardOpen] = useState(false);
 
   const [showMenu, setShowMenu] = useState(false);
+
+  const [isUserManageBtnActive, setIsUserManageBtnActive] = useState(false);
+  const [isSuggestionManageBtnActive, setIsSuggestionManageBtnActive] =
+    useState(false);
+  const [isDashboardBtnActive, setIsDashboardBtnActive] = useState(true);
+
+  const [addedUserDepartemen, setAddedUserDepartemen] = useState("");
+  const [addedUserJabatan, setAddedUserJabatan] = useState("");
+  const [addedUserName, setAddedUserName] = useState("");
+  const [addedUserNik, setAddedUserNik] = useState("");
+  const [addedUserRole, setAddedUserRole] = useState("");
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const [isSuggestionAccView, setIsSuggestionAccView] = useState(false);
+  const [isSuggestionAllView, setIsSuggestionAllView] = useState(false);
+  const [isSuggestionDisapproveView, setIsSuggestionDisapproveView] =
+    useState(false);
 
   const contextValue = {
     dateNow,
@@ -48,10 +82,14 @@ export const AllStateProvider = ({ children }) => {
     category,
     setCategory,
     selectedDate,
+    imageFile,
+    setImageFile,
     title,
     currentCondition,
     suggestion,
     status,
+    date,
+    setDate,
     setStatus,
     setTitle,
     setCurrentCondition,
@@ -88,6 +126,52 @@ export const AllStateProvider = ({ children }) => {
     setIsDeleteBtnLoading,
     setAllUserSuggestion,
     setSelectedDate,
+    isModalStatusDetailOpen,
+    setIsModalStatusDetailOpen,
+    isUserManageBtnActive,
+    setIsUserManageBtnActive,
+    isSuggestionManageBtnActive,
+    setIsSuggestionManageBtnActive,
+    isDashboardBtnActive,
+    setIsDashboardBtnActive,
+    addedUserDepartemen,
+    addedUserJabatan,
+    addedUserName,
+    addedUserNik,
+    addedUserRole,
+    setAddedUserDepartemen,
+    setAddedUserJabatan,
+    setAddedUserName,
+    setAddedUserNik,
+    setAddedUserRole,
+    allUserData,
+    setAllUserData,
+    userPoint,
+    setUserPoint,
+    isModalAddUserOpen,
+    setIsModalAddUserOpen,
+    isModalUserDetailOpen,
+    setIsModalUserDetailOpen,
+    editName,
+    editNik,
+    editJabatan,
+    editDepartemen,
+    editRole,
+    setEditName,
+    setEditNik,
+    setEditJabatan,
+    setEditDepartemen,
+    setEditRole,
+    isModalUserDeleteOpen,
+    setIsModalUserDeleteOpen,
+    isModalClaimRewardOpen,
+    setIsModalClaimRewardOpen,
+    isSuggestionAccView,
+    setIsSuggestionAccView,
+    isSuggestionAllView,
+    setIsSuggestionAllView,
+    isSuggestionDisapproveView,
+    setIsSuggestionDisapproveView,
   };
 
   return (

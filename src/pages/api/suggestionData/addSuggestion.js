@@ -11,6 +11,7 @@ export default async function handlerAddSuggestion(req, res) {
         userName,
         category,
         status,
+        date,
       } = req.body;
       await addSuggestion(
         title,
@@ -19,7 +20,8 @@ export default async function handlerAddSuggestion(req, res) {
         userNik,
         userName,
         category,
-        status
+        status,
+        date
       );
       res.status(200).json({ message: "Suggestion added successfully" });
     } catch (error) {

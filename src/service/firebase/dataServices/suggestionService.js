@@ -22,7 +22,8 @@ export async function addSuggestion(
   userNik,
   userName,
   category,
-  status
+  status,
+  date
 ) {
   try {
     const docRef = collection(firestore, "suggestionData");
@@ -34,12 +35,51 @@ export async function addSuggestion(
       userName: userName,
       category: category,
       status: status,
-      time: serverTimestamp(),
+      date: date,
     });
     return snapshot;
   } catch (error) {
     console.error("Error adding document subcollection to Firestore:", error);
     throw new Error("Failed to add document subcollection to Firestore");
+  }
+}
+
+export async function updateStatus(docId, status) {
+  try {
+    const docRef = doc(firestore, "suggestionData", docId);
+    await updateDoc(docRef, {
+      status: status,
+    });
+  } catch (error) {
+    console.error("Error updating document:", error);
+    throw new Error("Failed to update document subcollection to Firestore");
+  }
+}
+
+export async function setUserPoint(userNik) {
+  try {
+    let point = 0;
+    const allSuggestionRef = collection(firestore, "suggestionData");
+    const q1 = query(
+      allSuggestionRef,
+      where("userNik", "==", userNik),
+      where("status", "==", "ACC")
+    );
+    const snapshot = await getDocs(q1);
+    const totalSuggestion = snapshot.size;
+    point = totalSuggestion * 10;
+
+    const usersRef = collection(firestore, "users");
+    const q2 = query(usersRef, where("nik", "==", userNik));
+    const querySnapshot = await getDocs(q2);
+    querySnapshot.forEach(async (userDoc) => {
+      const userDocRef = doc(firestore, "users", userDoc.id);
+      await updateDoc(userDocRef, {
+        point: point,
+      });
+    });
+  } catch (error) {
+    console.log(error);
   }
 }
 

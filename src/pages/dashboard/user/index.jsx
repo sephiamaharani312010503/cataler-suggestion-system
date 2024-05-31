@@ -3,18 +3,16 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import { useSessionContext } from "@/context/SessionContext";
-import UserDashboardLayout from "@/components/Layout/UserDashboardLayout";
-import UserDashboardProfileContainer from "@/components/Layout/UserDashboardLayout/UserProfileContainer";
-import UserBiodataWrapper from "@/components/Layout/UserDashboardLayout/UserBiodataWrapper";
 import ProfileImage from "@/views/UserProfileView/ProfileImage";
 import UserProfile from "@/views/UserProfileView";
 import AddSuggestionForm from "@/views/AddSuggestionForm";
 import AllSuggestion from "@/views/AllSuggestionView";
+import UserStats from "@/views/UserStats";
 
 const UserDashboard = () => {
   const router = useRouter();
-  const { getSuggestionByUserName } = useSuggestionDataContext();
   const { session, userNik } = useSessionContext();
+  const { getSuggestionByUserName } = useSuggestionDataContext();
 
   const checkAuth = async () => {
     const session = await getSession();
@@ -38,18 +36,15 @@ const UserDashboard = () => {
       <div className="hidden md:flex ">
         <AddSuggestionForm />
         <div className="hidden md:flex md:flex-col md:w-2/3">
-          <UserDashboardLayout
-            content={
-              <UserDashboardProfileContainer
-                content={
-                  <>
-                    <ProfileImage />
-                    <UserBiodataWrapper content={<UserProfile />} />
-                  </>
-                }
-              />
-            }
-          />
+          <div className="pt-2 pe-8">
+            <div className="flex justify-between w-full px-2 pb-2 pt-1 border-2 border-gray-300 rounded-lg bg-gray-100 shadow-md md:mt-2 ms-2">
+              <div className="flex items-center">
+                <ProfileImage />
+                <UserProfile />
+              </div>
+              <UserStats />
+            </div>
+          </div>
           <AllSuggestion />
         </div>
       </div>

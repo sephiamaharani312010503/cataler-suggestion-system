@@ -12,6 +12,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
     title,
     currentCondition,
     suggestion,
+    status,
     setStatus,
     category,
     setTitle,
@@ -41,6 +42,11 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsDeleteBtnLoading,
     setSelectedName,
     setSelectedNik,
+    setIsModalAdminSuggestionDetailOpen,
+    selectedNik,
+    isModalClaimRewardOpen,
+    setIsModalClaimRewardOpen,
+    date,
   } = useAllStateContext();
 
   const handleRadioChange = (value) => {
@@ -59,6 +65,10 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsModalAddSuggestionOpen(!isModalAddSuggestionOpen);
   };
 
+  const handleClaimRewardModal = () => {
+    setIsModalClaimRewardOpen(!isModalClaimRewardOpen);
+  };
+
   const addSuggestion = async (event) => {
     event.preventDefault();
     try {
@@ -72,6 +82,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
         userName: userName,
         category: category,
         status: defaultStatus,
+        date: date,
       });
       setIsAddBtnLoading(false);
       setIsModalAddSuggestionOpen(false);
@@ -98,6 +109,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
         suggestion: selectedSuggestion,
       });
       setIsEditBtnLoading(false);
+      setIsModalSuggestionDetailOpen(false);
       getSuggestionByUserName();
     } catch (error) {
       console.log(error);
@@ -126,6 +138,16 @@ export const SuggestionDataContextProvider = ({ children }) => {
     }
   };
 
+  const setUserPoint = async () => {
+    try {
+      await axios.patch("/api/suggestionData/setUserPoint", {
+        userNik: selectedNik,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getSuggestionById = async (itemId) => {
     try {
       setIsDeleteBtnLoading(true);
@@ -140,10 +162,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
       setStatus(response.data.status);
       setSelectedName(response.data.userName);
       setSelectedNik(response.data.userNik);
-      const formattedDate = format(
-        new Date(response.data.time.seconds * 1000),
-        "dd/MM/yyyy"
-      );
+      const formattedDate = format(new Date(response.data.date), "dd/MM/yyyy");
       setSelectedDate(formattedDate);
       setIsDeleteBtnLoading(false);
     } catch (error) {
@@ -151,14 +170,33 @@ export const SuggestionDataContextProvider = ({ children }) => {
     }
   };
 
+  const updateStatus = async () => {
+    try {
+      await axios.patch("/api/suggestionData/updateStatus", {
+        docId: docId,
+        status: status,
+      });
+      setIsModalAdminSuggestionDetailOpen(false);
+      await setUserPoint();
+      getAllSuggestion();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteSuggestion = async () => {
     try {
       setIsDeleteBtnLoading(true);
-      await axios.delete(`/api/suggestionData/deleteSuggestion?docId=${docId}`);
+      await axios.delete(
+        `/api/suggestionData/deleteSuggestion?docId=${docId}&userNik=${selectedNik}`
+      );
       setIsDeleteBtnLoading(false);
       setIsModalSuggestionDeleteOpen(false);
       setIsModalSuggestionDetailOpen(false);
+      setIsModalAdminSuggestionDetailOpen(false);
       getSuggestionByUserName();
+      getAllSuggestion();
+      setUserPoint();
     } catch (error) {
       console.log(error);
       setIsDeleteBtnLoading(false);
@@ -176,6 +214,9 @@ export const SuggestionDataContextProvider = ({ children }) => {
     handleDeleteSuggestionModal,
     handleAddSuggestionModal,
     getSuggestionByUserName,
+    updateStatus,
+    setUserPoint,
+    handleClaimRewardModal,
   };
 
   return (

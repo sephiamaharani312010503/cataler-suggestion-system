@@ -7,6 +7,7 @@ import { SuggestionDataContextProvider } from "@/context/SuggestionDataContext";
 import { SessionContextProvider } from "@/context/SessionContext";
 import { ModalFunctionContextProvider } from "@/context/ModalFunctionContext";
 import Footer from "@/components/Footer";
+import { UserDataContextProvider } from "@/context/UserDataContext";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -24,13 +25,15 @@ export default function App({
       <div className={lato.className}>
         <SessionContextProvider>
           <AllStateProvider>
-            <SuggestionDataContextProvider>
-              <ModalFunctionContextProvider>
-                <Navbar />
-                <Component {...pageProps} />
-                <Footer />
-              </ModalFunctionContextProvider>
-            </SuggestionDataContextProvider>
+            <UserDataContextProvider>
+              <SuggestionDataContextProvider>
+                <ModalFunctionContextProvider>
+                  <Navbar />
+                  <Component {...pageProps} />
+                  <Footer />
+                </ModalFunctionContextProvider>
+              </SuggestionDataContextProvider>
+            </UserDataContextProvider>
           </AllStateProvider>
         </SessionContextProvider>
       </div>

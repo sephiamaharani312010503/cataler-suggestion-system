@@ -1,12 +1,34 @@
+import { useAllStateContext } from "@/context/AllStateContext";
 import { useSessionContext } from "@/context/SessionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
+import { useUserDataContext } from "@/context/UserDataContext";
 import AdminAllSuggestion from "@/views/AdminDashboardContentView/AdminAllSuggestionView";
+import AdminDashboardInfo from "@/views/AdminDashboardContentView/AdminDashboardInfo/Index";
+import AdminUserManagement from "@/views/AdminDashboardContentView/AdminUserManagementView";
 import AdminSideBar from "@/views/AdminDashboardContentView/SideBar";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const AdminDashboard = () => {
+  const router = useRouter();
   const { session } = useSessionContext();
   const { getAllSuggestion } = useSuggestionDataContext();
+  const { isUserManageBtnActive, isDashboardBtnActive } = useAllStateContext();
+
+  const checkAuth = async () => {
+    const session = await getSession();
+    if (!session) {
+      router.push("/");
+    } else if (session && session?.user.role !== "Admin") {
+      router.push("/dashboard/user");
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
 
   useEffect(() => {
     getAllSuggestion();
@@ -16,7 +38,15 @@ const AdminDashboard = () => {
   return (
     <div className="container flex min-w-full">
       <AdminSideBar />
-      <AdminAllSuggestion />
+      <div className="w-full">
+        {isUserManageBtnActive ? (
+          <AdminUserManagement />
+        ) : isDashboardBtnActive ? (
+          <AdminDashboardInfo />
+        ) : (
+          <AdminAllSuggestion />
+        )}
+      </div>
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import { deleteSuggestion } from "@/service/firebase/dataServices/suggestionService";
+import { deleteUser } from "@/service/firebase/dataServices/userServices";
 
-export default async function handlerDeleteSuggestion(req, res) {
+export default async function handlerDeleteUser(req, res) {
   if (req.method === "DELETE") {
     try {
-      const { docId, userNik } = req.query;
+      const { docId } = req.query;
 
-      const data = await deleteSuggestion(docId, userNik);
+      const data = await deleteUser(docId);
       res.status(200).json(data);
     } catch (error) {
       console.error("Error deleting Suggestion data:", error);

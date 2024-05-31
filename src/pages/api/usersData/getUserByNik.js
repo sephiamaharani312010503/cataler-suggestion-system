@@ -1,11 +1,11 @@
-import { getSuggestionByUserName } from "@/service/firebase/dataServices/suggestionService";
+import { getUserByNik } from "@/service/firebase/dataServices/userServices";
 
-export default async function handlerGetSuggestionByUserName(req, res) {
+export default async function handlerGetUserByUserName(req, res) {
   if (req.method === "GET") {
     try {
       const { userNik } = req.query;
 
-      const data = await getSuggestionByUserName(userNik);
+      const data = await getUserByNik(userNik);
       res.status(200).json(data);
     } catch (error) {
       console.error("Error fetching all suggestions:", error);
