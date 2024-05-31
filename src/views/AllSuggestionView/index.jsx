@@ -24,7 +24,7 @@ const AllSuggestion = () => {
     <div className="pe-4 md:pe-8 mb-3">
       <div
         style={{ height: "390px" }}
-        className="container mt-1 ms-2 p-3 border-2 border-gray-300 bg-gray-50 shadow-lg shadow-gray-400/60 rounded-lg">
+        className="container mt-1 ms-2 p-3 border-2 border-gray-300 bg-white shadow-lg shadow-gray-400/60 rounded-lg">
         <div className="flex items-center justify-between ms-1 mb-2">
           <p className="font-bold mb-2">Saran Anda</p>
           <button

@@ -4,13 +4,17 @@ import { useModalFunctionContext } from "@/context/ModalFunctionContext";
 import { useSessionContext } from "@/context/SessionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import { useUserDataContext } from "@/context/UserDataContext";
-import { faUserPen, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLeftLong,
+  faUserPen,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 
 const AdminUserManagement = () => {
   const { session } = useSessionContext();
-  const { setUserPoint } = useSuggestionDataContext();
+  const { setUserPoint, resetStatBtn } = useSuggestionDataContext();
   const { getAllUserData, getUserById } = useUserDataContext();
   const {
     allUserData,
@@ -19,6 +23,7 @@ const AdminUserManagement = () => {
     isModalUserDetailOpen,
     setIsModalUserDetailOpen,
     isModalUserDeleteOpen,
+    isStatUserClicked,
   } = useAllStateContext();
   const { modalAddUser, modalUserDetail, modalDeleteUser } =
     useModalFunctionContext();
@@ -38,7 +43,17 @@ const AdminUserManagement = () => {
       content={
         <div className="container border rounded px-2">
           <div className="flex items-center justify-between mt-3 mb-2 ms-2">
-            <p className="font-bold">Kelola User</p>
+            {isStatUserClicked ? (
+              <button className="btn btn-sm btn-outline" onClick={resetStatBtn}>
+                <span>
+                  <FontAwesomeIcon icon={faLeftLong} />
+                </span>
+                Dashboard
+              </button>
+            ) : (
+              <p className="font-bold">Kelola User</p>
+            )}
+
             <button
               onClick={() => setIsModalAddUserOpen(true)}
               className="btn btn-sm btn-secondary text-white">

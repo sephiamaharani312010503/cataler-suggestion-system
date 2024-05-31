@@ -1,14 +1,13 @@
 import { useAllStateContext } from "@/context/AllStateContext";
 import { useSessionContext } from "@/context/SessionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
-import { useUserDataContext } from "@/context/UserDataContext";
-import AdminAllSuggestion from "@/views/AdminDashboardContentView/AdminAllSuggestionView";
 import AdminDashboardInfo from "@/views/AdminDashboardContentView/AdminDashboardInfo/Index";
 import AdminUserManagement from "@/views/AdminDashboardContentView/AdminUserManagementView";
 import AdminSideBar from "@/views/AdminDashboardContentView/SideBar";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import AdminSuggestionView from "@/views/AdminDashboardContentView/AdminSuggestionView";
 
 const AdminDashboard = () => {
   const router = useRouter();
@@ -44,7 +43,7 @@ const AdminDashboard = () => {
         ) : isDashboardBtnActive ? (
           <AdminDashboardInfo />
         ) : (
-          <AdminAllSuggestion />
+          <AdminSuggestionView />
         )}
       </div>
     </div>

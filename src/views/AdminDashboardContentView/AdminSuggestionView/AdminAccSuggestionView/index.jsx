@@ -1,25 +1,13 @@
-import AdminContentLayout from "@/components/Layout/AdminDashboardLayout";
 import { useAllStateContext } from "@/context/AllStateContext";
-import { useModalFunctionContext } from "@/context/ModalFunctionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 
 const AdminAccSuggestion = () => {
-  const {
-    allSuggestion,
-    isModalAdminSuggestionDetailOpen,
-    isModalSuggestionDeleteOpen,
-    setIsModalAdminSuggestionDetailOpen,
-    isModalStatusDetailOpen,
-  } = useAllStateContext();
+  const { allSuggestion, setIsModalAdminSuggestionDetailOpen } =
+    useAllStateContext();
   const { getSuggestionById } = useSuggestionDataContext();
-  const {
-    modalDeleteSuggestion,
-    modalAdminSuggestionDetail,
-    modalStatusDetail,
-  } = useModalFunctionContext();
 
   return (
     <table className="table mt-1">

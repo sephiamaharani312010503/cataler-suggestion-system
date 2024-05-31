@@ -23,6 +23,7 @@ export async function addUser(name, nik, departemen, jabatan, role) {
       departemen: departemen,
       jabatan: jabatan,
       role: role,
+      point: 0,
     });
     return snapshot;
   } catch (error) {

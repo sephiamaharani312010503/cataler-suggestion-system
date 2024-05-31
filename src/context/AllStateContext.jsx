@@ -64,7 +64,7 @@ export const AllStateProvider = ({ children }) => {
   const [addedUserJabatan, setAddedUserJabatan] = useState("");
   const [addedUserName, setAddedUserName] = useState("");
   const [addedUserNik, setAddedUserNik] = useState("");
-  const [addedUserRole, setAddedUserRole] = useState("");
+  const [addedUserRole, setAddedUserRole] = useState("User");
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -72,6 +72,10 @@ export const AllStateProvider = ({ children }) => {
   const [isSuggestionAllView, setIsSuggestionAllView] = useState(false);
   const [isSuggestionDisapproveView, setIsSuggestionDisapproveView] =
     useState(false);
+  const [isUserManagementView, setIsUserManagementView] = useState(false);
+
+  const [isStatUserClicked, setIsStatUserClicked] = useState(false);
+  const [isStatClicked, setIsStatClicked] = useState(false);
 
   const contextValue = {
     dateNow,
@@ -172,6 +176,12 @@ export const AllStateProvider = ({ children }) => {
     setIsSuggestionAllView,
     isSuggestionDisapproveView,
     setIsSuggestionDisapproveView,
+    isStatClicked,
+    setIsStatClicked,
+    isUserManagementView,
+    setIsUserManagementView,
+    isStatUserClicked,
+    setIsStatUserClicked,
   };
 
   return (

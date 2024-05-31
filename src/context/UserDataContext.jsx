@@ -47,6 +47,7 @@ export const UserDataContextProvider = ({ children }) => {
         jabatan: addedUserJabatan,
         role: addedUserRole,
       });
+      getAllUserData();
       setIsModalAddUserOpen(false);
     } catch (error) {
       console.log(error);

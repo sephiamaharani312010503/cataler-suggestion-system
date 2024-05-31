@@ -47,6 +47,12 @@ export const SuggestionDataContextProvider = ({ children }) => {
     isModalClaimRewardOpen,
     setIsModalClaimRewardOpen,
     date,
+    setIsStatClicked,
+    setIsStatUserClicked,
+    setIsSuggestionAllView,
+    setIsSuggestionAccView,
+    setIsSuggestionDisapproveView,
+    setIsUserManagementView,
   } = useAllStateContext();
 
   const handleRadioChange = (value) => {
@@ -67,6 +73,33 @@ export const SuggestionDataContextProvider = ({ children }) => {
 
   const handleClaimRewardModal = () => {
     setIsModalClaimRewardOpen(!isModalClaimRewardOpen);
+  };
+
+  const handleAllSuggestionView = () => {
+    setIsSuggestionAllView(true);
+    setIsSuggestionAccView(false);
+    setIsSuggestionDisapproveView(false);
+  };
+
+  const handleAccSuggestionView = () => {
+    setIsSuggestionAllView(false);
+    setIsSuggestionAccView(true);
+    setIsSuggestionDisapproveView(false);
+  };
+
+  const handleDisapproveSuggestionView = () => {
+    setIsSuggestionAllView(false);
+    setIsSuggestionAccView(false);
+    setIsSuggestionDisapproveView(true);
+  };
+
+  const resetStatBtn = () => {
+    setIsStatClicked(false);
+    setIsStatUserClicked(false);
+    setIsSuggestionAllView(false);
+    setIsSuggestionAccView(false);
+    setIsSuggestionDisapproveView(false);
+    setIsUserManagementView(false);
   };
 
   const addSuggestion = async (event) => {
@@ -217,6 +250,10 @@ export const SuggestionDataContextProvider = ({ children }) => {
     updateStatus,
     setUserPoint,
     handleClaimRewardModal,
+    handleAllSuggestionView,
+    handleAccSuggestionView,
+    handleDisapproveSuggestionView,
+    resetStatBtn,
   };
 
   return (

@@ -1,5 +1,6 @@
 import { useAllStateContext } from "@/context/AllStateContext";
 import { useSessionContext } from "@/context/SessionContext";
+import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import ProfileImage from "@/views/UserProfileView/ProfileImage";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -20,19 +21,24 @@ const AdminSideBar = () => {
     isDashboardBtnActive,
   } = useAllStateContext();
 
+  const { resetStatBtn } = useSuggestionDataContext();
+
   const handleUserManageBtn = () => {
+    resetStatBtn();
     setIsUserManageBtnActive(true);
     setIsSuggestionManageBtnActive(false);
     setIsDashboardBtnActive(false);
   };
 
   const handleSuggestionManageBtn = () => {
+    resetStatBtn();
     setIsSuggestionManageBtnActive(true);
     setIsUserManageBtnActive(false);
     setIsDashboardBtnActive(false);
   };
 
   const handleDashboardBtn = () => {
+    resetStatBtn();
     setIsDashboardBtnActive(true);
     setIsSuggestionManageBtnActive(false);
     setIsUserManageBtnActive(false);

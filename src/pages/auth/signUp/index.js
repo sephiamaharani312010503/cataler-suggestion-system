@@ -66,7 +66,10 @@ const RegisterPage = () => {
           </label>
           <div className="flex items-center justify-between mt-2 ">
             <p>
-              Have an account? sign in <Link href="/auth/signIn">here</Link>
+              Have an account? sign in
+              <Link href="/" className="text-secondary">
+                here
+              </Link>
             </p>
             <button className="btn btn-sm btn-primary" type="submit">
               {isLoading ? "Loading..." : "Sign Up"}
