@@ -53,6 +53,10 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsSuggestionAccView,
     setIsSuggestionDisapproveView,
     setIsUserManagementView,
+    lastDocId,
+    setIsImageBeforeUploaded,
+    setImageBeforeUrl,
+    setImageAfterUrl,
   } = useAllStateContext();
 
   const handleRadioChange = (value) => {
@@ -102,12 +106,18 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsUserManagementView(false);
   };
 
+  const resetUrl = () => {
+    setImageBeforeUrl("");
+    setImageAfterUrl("");
+  };
+
   const addSuggestion = async (event) => {
     event.preventDefault();
     try {
       const defaultStatus = "Waiting";
       setIsAddBtnLoading(true);
-      await axios.post("/api/suggestionData/addSuggestion", {
+      await axios.patch("/api/suggestionData/addSuggestion", {
+        docId: lastDocId,
         title: title,
         currentCondition: currentCondition,
         suggestion: suggestion,
@@ -117,6 +127,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
         status: defaultStatus,
         date: date,
       });
+      setIsImageBeforeUploaded(false);
       setIsAddBtnLoading(false);
       setIsModalAddSuggestionOpen(false);
       setTitle("");
@@ -124,6 +135,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
       setSuggestion("");
       setCategory("");
       getSuggestionByUserName();
+      resetUrl();
     } catch (error) {
       console.log(error);
       setIsAddBtnLoading(false);
@@ -195,6 +207,8 @@ export const SuggestionDataContextProvider = ({ children }) => {
       setStatus(response.data.status);
       setSelectedName(response.data.userName);
       setSelectedNik(response.data.userNik);
+      setImageBeforeUrl(response.data.imageBefore.url);
+      setImageAfterUrl(response.data.imageAfter.url);
       const formattedDate = format(new Date(response.data.date), "dd/MM/yyyy");
       setSelectedDate(formattedDate);
       setIsDeleteBtnLoading(false);

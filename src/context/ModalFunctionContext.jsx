@@ -5,6 +5,9 @@ import { useSuggestionDataContext } from "./SuggestionDataContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useUserDataContext } from "./UserDataContext";
+import { useHandleUploadImageContext } from "./HandleUploadImageContext";
+import Image from "next/image";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
 const ModalFunctionContext = createContext();
 
@@ -31,7 +34,6 @@ export const ModalFunctionContextProvider = ({ children }) => {
     isDeleteBtnLoading,
     selectedDate,
     setIsModalAdminSuggestionDetailOpen,
-    isModalAddUserOpen,
     setIsModalAddUserOpen,
     selectedName,
     selectedNik,
@@ -59,7 +61,28 @@ export const ModalFunctionContextProvider = ({ children }) => {
     setEditJabatan,
     setEditDepartemen,
     setEditRole,
+    setIsModalAttachmentOpen,
+    isImage1Uploading,
+    isImage2Uploading,
+    imageBeforeUrl,
+    imageAfterUrl,
+    imageBefore,
+    imageAfter,
+    errorMessageImageBefore,
+    setErrorMessageImageBefore,
+    errorMessageImageAfter,
+    setErrorMessageImageAfter,
+    setIsModalAttachmentDetailOpen,
+    setImageBeforeUrl,
+    setImageAfterUrl,
   } = useAllStateContext();
+
+  const {
+    handleChangeImageBefore,
+    handleChangeImageAfter,
+    uploadImageBefore,
+    uploadImageAfter,
+  } = useHandleUploadImageContext();
 
   const {
     addSuggestion,
@@ -123,6 +146,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
                   onChange={(e) => setAddedUserRole(e.target.value)}>
                   <option value={"Admin"}>Admin</option>
                   <option value={"User"}>User</option>
+                  <option value={"Section Head"}>Section Head</option>
                 </select>
                 <button
                   type="submit"
@@ -191,6 +215,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
                   onChange={(e) => setEditRole(e.target.value)}>
                   <option value={"Admin"}>Admin</option>
                   <option value={"User"}>User</option>
+                  <option value={"Section Head"}>Section Head</option>
                 </select>
                 <div className="flex w-full mt-4 justify-end">
                   <button
@@ -385,9 +410,16 @@ export const ModalFunctionContextProvider = ({ children }) => {
                   onChange={(e) => setSelectedSuggestion(e.target.value)}
                   className="textarea textarea-bordered w-full"
                 />
-                <label className="label text-sm">Lampiran :</label>
-                <div className="flex justify-between mb-2">
-                  <input className="input input-sm input-bordered" />
+                <div className="flex items-center justify-between mb-2 mt-3">
+                  <button
+                    onClick={() => setIsModalAttachmentDetailOpen(true)}
+                    type="button"
+                    className="link text-secondary ms-1 me-20">
+                    <FontAwesomeIcon icon={faPaperclip} />
+                    <span className="ms-1 italic font-semibold">
+                      Lihat Lampiran
+                    </span>
+                  </button>
                   <div className="flex justify-end">
                     <button
                       onClick={handleDeleteSuggestionModal}
@@ -564,6 +596,205 @@ export const ModalFunctionContextProvider = ({ children }) => {
     );
   };
 
+  const modalAddAttachment = () => {
+    return (
+      <dialog className="modal" open>
+        <div className="modal-box w-1/2 max-w-5xl">
+          <div>
+            <div className="flex justify-between">
+              <h1 className="font-bold">Tambah Lampiran</h1>
+              <button
+                onClick={() => {
+                  setErrorMessageImageBefore("");
+                  setErrorMessageImageAfter("");
+                  setIsModalAttachmentOpen(false);
+                }}
+                className="me-1">
+                ✕
+              </button>
+            </div>
+            <hr className="mt-2" />
+            <div className="border mt-2 p-2">
+              <div className="flex">
+                <div className="w-1/2">
+                  <p className="font-semibol underline text-center">
+                    Sebelum Kaizen :
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  <p className="font-semibol underline text-center">
+                    Sesudah Kaizen :
+                  </p>
+                </div>
+              </div>
+              <div className="flex jutify-between min-w-full mt-2">
+                <div className="w-1/2 min-h-36">
+                  <div className="pe-3">
+                    {imageBeforeUrl ? (
+                      <Image
+                        src={imageBeforeUrl}
+                        alt="Uploaded Image"
+                        width={500}
+                        height={500}
+                        layout="responsive"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="w-1/2 min-h-36 ">
+                  <div className="ps-3">
+                    {imageAfterUrl ? (
+                      <Image
+                        src={imageAfterUrl}
+                        alt="Uploaded Image"
+                        width={500}
+                        height={500}
+                        layout="responsive"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
+              <hr className="mt-2" />
+              <div className="flex">
+                <div className="w-1/2 pe-3">
+                  <input
+                    type="file"
+                    onChange={handleChangeImageBefore}
+                    className="file-input file-input-sm file-input-bordered mt-3"
+                  />
+                  <button
+                    onClick={uploadImageBefore}
+                    className="btn btn-sm w-full mt-2">
+                    {isImage1Uploading ? "Uploading..." : "Upload"}
+                  </button>
+                  {Array.isArray(imageBefore) && imageBefore[0] == null ? (
+                    <p className="text-center mt-2 text-error">
+                      {errorMessageImageBefore}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="w-1/2 ps-3">
+                  <input
+                    type="file"
+                    onChange={handleChangeImageAfter}
+                    className="file-input file-input-sm file-input-bordered mt-3"
+                  />
+                  <button
+                    onClick={uploadImageAfter}
+                    className="btn btn-sm w-full mt-2">
+                    {isImage2Uploading ? "Uploading..." : "Upload"}
+                  </button>
+                  {Array.isArray(imageAfter) && imageAfter[0] == null ? (
+                    <p className="text-center mt-2 text-error">
+                      {errorMessageImageAfter}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setErrorMessageImageBefore("");
+                  setErrorMessageImageAfter("");
+                  setIsModalAttachmentOpen(false);
+                }}
+                className="btn btn-sm btn-primary text-white mt-3">
+                Selesai
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    );
+  };
+  const modalAttachmentDetail = () => {
+    return (
+      <dialog className="modal" open>
+        <div className="modal-box w-1/2 max-w-5xl">
+          <div>
+            <div className="flex justify-between">
+              <h1 className="font-bold">Lampiran</h1>
+              <button
+                onClick={() => {
+                  setIsModalAttachmentDetailOpen(false);
+                }}
+                className="me-1">
+                ✕
+              </button>
+            </div>
+            <hr className="mt-2" />
+            <div className="border mt-2 p-2">
+              <div className="flex">
+                <div className="w-1/2">
+                  <p className="font-semibol underline text-center">
+                    Sebelum Kaizen :
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  <p className="font-semibol underline text-center">
+                    Sesudah Kaizen :
+                  </p>
+                </div>
+              </div>
+              <div className="flex jutify-between min-w-full mt-2">
+                <div className="w-1/2 min-h-36">
+                  <div className="pe-3">
+                    {imageBeforeUrl ? (
+                      <Image
+                        src={imageBeforeUrl}
+                        alt="Uploaded Image"
+                        width={500}
+                        height={500}
+                        layout="responsive"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="w-1/2 min-h-36 ">
+                  <div className="ps-3">
+                    {imageAfterUrl ? (
+                      <Image
+                        src={imageAfterUrl}
+                        alt="Uploaded Image"
+                        width={500}
+                        height={500}
+                        layout="responsive"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr className="mt-2" />
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setIsModalAttachmentDetailOpen(false);
+                }}
+                className="btn btn-sm btn-primary text-white mt-3">
+                Selesai
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    );
+  };
+
   const modalDeleteSuggestion = () => {
     return (
       <Modal
@@ -634,6 +865,8 @@ export const ModalFunctionContextProvider = ({ children }) => {
     modalAddUser,
     modalUserDetail,
     modalClaimReward,
+    modalAddAttachment,
+    modalAttachmentDetail,
   };
 
   return (

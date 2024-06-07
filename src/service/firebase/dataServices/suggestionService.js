@@ -16,6 +16,7 @@ import app from "../init";
 const firestore = getFirestore(app);
 
 export async function addSuggestion(
+  docId,
   title,
   currentCondition,
   suggestion,
@@ -26,8 +27,8 @@ export async function addSuggestion(
   date
 ) {
   try {
-    const docRef = collection(firestore, "suggestionData");
-    const snapshot = await addDoc(docRef, {
+    const docRef = doc(firestore, "suggestionData", docId);
+    await updateDoc(docRef, {
       title: title,
       currentCondition: currentCondition,
       suggestion: suggestion,
@@ -37,7 +38,6 @@ export async function addSuggestion(
       status: status,
       date: date,
     });
-    return snapshot;
   } catch (error) {
     console.error("Error adding document subcollection to Firestore:", error);
     throw new Error("Failed to add document subcollection to Firestore");

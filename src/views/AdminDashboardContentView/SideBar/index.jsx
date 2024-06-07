@@ -2,7 +2,6 @@ import { useAllStateContext } from "@/context/AllStateContext";
 import { useSessionContext } from "@/context/SessionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import ProfileImage from "@/views/UserProfileView/ProfileImage";
-import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import {
   faHouse,
   faListCheck,
@@ -11,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AdminSideBar = () => {
-  const { userName } = useSessionContext();
+  const { userName, userRole } = useSessionContext();
   const {
     setIsUserManageBtnActive,
     setIsSuggestionManageBtnActive,
@@ -52,12 +51,14 @@ const AdminSideBar = () => {
             <ProfileImage />
           </div>
           <hr className="mt-3" />
-          <div className="flex items-center mt-2 mx-1">
-            <p className="w-full text-secondary font-bold">
-              <span>{userName}</span>
-            </p>
-            <div className="badge badge-primary badge-outline font-semibold">
-              Admin
+          <div className="flex flex-col items-center mt-1 mx-1">
+            <div>
+              <p className="w-full text-secondary font-bold">
+                <span>{userName}</span>
+              </p>
+            </div>
+            <div className="badge badge-primary badge-outline font-semibold mt-2">
+              {userRole}
             </div>
           </div>
         </div>
@@ -86,16 +87,20 @@ const AdminSideBar = () => {
             </div>
           </div>
           <hr />
-          <div
-            onClick={handleUserManageBtn}
-            className={`w-full px-1 ${
-              isUserManageBtnActive ? "bg-gray-300" : ""
-            } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
-            <div className="px-1">
-              <FontAwesomeIcon icon={faUsersGear} />
-              <span className="ms-2">Kelola User</span>
+          {userRole == "Section Head" ? (
+            ""
+          ) : (
+            <div
+              onClick={handleUserManageBtn}
+              className={`w-full px-1 ${
+                isUserManageBtnActive ? "bg-gray-300" : ""
+              } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
+              <div className="px-1">
+                <FontAwesomeIcon icon={faUsersGear} />
+                <span className="ms-2">Kelola User</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

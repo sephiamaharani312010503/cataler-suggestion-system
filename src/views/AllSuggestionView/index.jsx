@@ -12,10 +12,15 @@ const AllSuggestion = () => {
     isModalSuggestionDeleteOpen,
     isModalAddSuggestionOpen,
     setIsModalSuggestionDetailOpen,
+    isModalAttachmentDetailOpen,
   } = useAllStateContext();
 
-  const { modalSuggestionDetail, modalDeleteSuggestion, modalAddSuggestion } =
-    useModalFunctionContext();
+  const {
+    modalSuggestionDetail,
+    modalDeleteSuggestion,
+    modalAddSuggestion,
+    modalAttachmentDetail,
+  } = useModalFunctionContext();
 
   const { getSuggestionById, handleAddSuggestionModal } =
     useSuggestionDataContext();
@@ -75,6 +80,7 @@ const AllSuggestion = () => {
         {isModalSuggestionDetailOpen && modalSuggestionDetail()}
         {isModalSuggestionDeleteOpen && modalDeleteSuggestion()}
         {isModalAddSuggestionOpen && modalAddSuggestion()}
+        {isModalAttachmentDetailOpen && modalAttachmentDetail()}
       </div>
     </div>
   );

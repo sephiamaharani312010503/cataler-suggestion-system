@@ -1,9 +1,10 @@
 import { addSuggestion } from "@/service/firebase/dataServices/suggestionService";
 
 export default async function handlerAddSuggestion(req, res) {
-  if (req.method === "POST") {
+  if (req.method === "PATCH") {
     try {
       const {
+        docId,
         title,
         currentCondition,
         suggestion,
@@ -13,7 +14,8 @@ export default async function handlerAddSuggestion(req, res) {
         status,
         date,
       } = req.body;
-      await addSuggestion(
+      const data = await addSuggestion(
+        docId,
         title,
         currentCondition,
         suggestion,
@@ -23,7 +25,10 @@ export default async function handlerAddSuggestion(req, res) {
         status,
         date
       );
-      res.status(200).json({ message: "Suggestion added successfully" });
+
+      res
+        .status(200)
+        .json({ message: "Suggestion added successfully", id: data });
     } catch (error) {
       console.error("Error adding suggestion:", error);
       res

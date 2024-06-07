@@ -34,7 +34,10 @@ export default function Home() {
         setIsLoading(false);
         form.reset();
         const session = await getSession();
-        if (session.user.role === "Admin") {
+        if (
+          session.user.role === "Admin" ||
+          session.user.role === "Section Head"
+        ) {
           push("/dashboard/admin");
         } else {
           push("/dashboard/user");

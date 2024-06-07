@@ -1,6 +1,11 @@
 import { useAllStateContext } from "@/context/AllStateContext";
+import { useHandleUploadImageContext } from "@/context/HandleUploadImageContext";
+import { useModalFunctionContext } from "@/context/ModalFunctionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
-import axios from "axios";
+import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCircleCheck, faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const AddSuggestionForm = () => {
   const {
     title,
@@ -13,14 +18,12 @@ const AddSuggestionForm = () => {
     isAddBtnLoading,
     date,
     setDate,
-    imageFile,
-    setImageFile,
+    isModalAttachmentOpen,
+    setIsModalAttachmentOpen,
+    isImageBeforeUploaded,
   } = useAllStateContext();
   const { addSuggestion, handleRadioChange } = useSuggestionDataContext();
-
-  const handleFileChange = (event) => {
-    setImageFile(event.target.files[0]);
-  };
+  const { modalAddAttachment } = useModalFunctionContext();
 
   return (
     <div className="container w-full md:w-1/3 md:ps-6 md:pt-4">
@@ -89,7 +92,6 @@ const AddSuggestionForm = () => {
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
-                    role="button"
                     className="btn btn-circle btn-ghost btn-xs text-info">
                     <svg
                       tabIndex={0}
@@ -105,11 +107,11 @@ const AddSuggestionForm = () => {
                     </svg>
                   </div>
                   <div
+                    type="button"
                     tabIndex={0}
                     className="card compact dropdown-content z-[1] shadow bg-base-100 rounded-box w-64">
                     <div tabIndex={0} className="card-body">
-                      <h2 className="card-title">You needed more info?</h2>
-                      <p>Here is a description!</p>
+                      <p> Berikan Judul Kaizen Anda Secara Singkat!</p>
                     </div>
                   </div>
                 </div>
@@ -126,7 +128,6 @@ const AddSuggestionForm = () => {
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
-                    role="button"
                     className="btn btn-circle btn-ghost btn-xs text-info">
                     <svg
                       tabIndex={0}
@@ -145,8 +146,7 @@ const AddSuggestionForm = () => {
                     tabIndex={0}
                     className="card compact dropdown-content z-[1] shadow bg-base-100 rounded-box w-64">
                     <div tabIndex={0} className="card-body">
-                      <h2 className="card-title">You needed more info?</h2>
-                      <p>Here is a description!</p>
+                      <p>Penjelasan Masalah Kondisi Saat Ini Sebelum Kaizen</p>
                     </div>
                   </div>
                 </div>
@@ -163,7 +163,6 @@ const AddSuggestionForm = () => {
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
-                    role="button"
                     className="btn btn-circle btn-ghost btn-xs text-info">
                     <svg
                       tabIndex={0}
@@ -182,8 +181,7 @@ const AddSuggestionForm = () => {
                     tabIndex={0}
                     className="card compact dropdown-content z-[1] shadow bg-base-100 rounded-box w-64">
                     <div tabIndex={0} className="card-body">
-                      <h2 className="card-title">You needed more info?</h2>
-                      <p>Here is a description!</p>
+                      <p>Usulan Perbaikan Kondisi Setelah Perbaikan</p>
                     </div>
                   </div>
                 </div>
@@ -194,18 +192,32 @@ const AddSuggestionForm = () => {
               onChange={(e) => setSuggestion(e.target.value)}
               className="textarea textarea-bordered w-full"
             />
-            <label className="label text-sm text-gray-600 font-bold">
-              Lampiran :
-            </label>
-            <div className="flex items-center justify-between mb-2">
-              <input
-                type="file"
-                className="file-input file-input-bordered file-input-sm"
-              />
+            <div className="flex items-center justify-between mb-1 mt-4 ms-1">
+              <div className="flex items-center">
+                <button
+                  onClick={() => setIsModalAttachmentOpen(true)}
+                  type="button"
+                  className="link text-secondary ms-1 me-20">
+                  <FontAwesomeIcon icon={faPaperclip} />
+                  <span className="ms-1 italic font-semibold">*Lampiran</span>
+                  {isImageBeforeUploaded ? (
+                    <span className="ms-2 text-green-500">
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </button>
+                {!isImageBeforeUploaded ? (
+                  <p className="text-warning text-sm">Upload Foto!</p>
+                ) : (
+                  ""
+                )}
+              </div>
               <button
                 type="submit"
                 className="btn btn-sm btn-primary text-white"
-                disabled={isAddBtnLoading ? true : false}>
+                disabled={!isImageBeforeUploaded ? true : false}>
                 {isAddBtnLoading ? (
                   <span className="flex items-center">
                     <span className="loading loading-spinner mr-2"></span>
@@ -219,6 +231,7 @@ const AddSuggestionForm = () => {
           </div>
         </form>
       </div>
+      {isModalAttachmentOpen && modalAddAttachment()}
     </div>
   );
 };

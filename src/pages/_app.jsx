@@ -8,6 +8,7 @@ import { SessionContextProvider } from "@/context/SessionContext";
 import { ModalFunctionContextProvider } from "@/context/ModalFunctionContext";
 import Footer from "@/components/Footer";
 import { UserDataContextProvider } from "@/context/UserDataContext";
+import { HandleUploadImageContextProvider } from "@/context/HandleUploadImageContext";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -27,11 +28,13 @@ export default function App({
           <AllStateProvider>
             <UserDataContextProvider>
               <SuggestionDataContextProvider>
-                <ModalFunctionContextProvider>
-                  <Navbar />
-                  <Component {...pageProps} />
-                  <Footer />
-                </ModalFunctionContextProvider>
+                <HandleUploadImageContextProvider>
+                  <ModalFunctionContextProvider>
+                    <Navbar />
+                    <Component {...pageProps} />
+                    <Footer />
+                  </ModalFunctionContextProvider>
+                </HandleUploadImageContextProvider>
               </SuggestionDataContextProvider>
             </UserDataContextProvider>
           </AllStateProvider>

@@ -77,6 +77,24 @@ export const AllStateProvider = ({ children }) => {
   const [isStatUserClicked, setIsStatUserClicked] = useState(false);
   const [isStatClicked, setIsStatClicked] = useState(false);
 
+  const [isModalAttachmentDetailOpen, setIsModalAttachmentDetailOpen] =
+    useState(false);
+  const [isModalAttachmentOpen, setIsModalAttachmentOpen] = useState(false);
+  const [isImageBeforeUploaded, setIsImageBeforeUploaded] = useState(false);
+
+  const [imageBefore, setImageBefore] = useState([null]);
+  const [imageAfter, setImageAfter] = useState([null]);
+
+  const [lastDocId, setLastDocId] = useState("");
+  const [imageBeforeUrl, setImageBeforeUrl] = useState("");
+  const [imageAfterUrl, setImageAfterUrl] = useState("");
+
+  const [isImage1Uploading, setIsImage1Uploading] = useState(false);
+  const [isImage2Uploading, setIsImage2Uploading] = useState(false);
+
+  const [errorMessageImageBefore, setErrorMessageImageBefore] = useState("");
+  const [errorMessageImageAfter, setErrorMessageImageAfter] = useState("");
+
   const contextValue = {
     dateNow,
     setDateNow,
@@ -182,6 +200,30 @@ export const AllStateProvider = ({ children }) => {
     setIsUserManagementView,
     isStatUserClicked,
     setIsStatUserClicked,
+    isModalAttachmentOpen,
+    setIsModalAttachmentOpen,
+    imageBefore,
+    setImageBefore,
+    imageAfter,
+    setImageAfter,
+    lastDocId,
+    setLastDocId,
+    isImageBeforeUploaded,
+    setIsImageBeforeUploaded,
+    imageBeforeUrl,
+    imageAfterUrl,
+    setImageBeforeUrl,
+    setImageAfterUrl,
+    isImage1Uploading,
+    setIsImage1Uploading,
+    isImage2Uploading,
+    setIsImage2Uploading,
+    errorMessageImageBefore,
+    setErrorMessageImageBefore,
+    errorMessageImageAfter,
+    setErrorMessageImageAfter,
+    isModalAttachmentDetailOpen,
+    setIsModalAttachmentDetailOpen,
   };
 
   return (

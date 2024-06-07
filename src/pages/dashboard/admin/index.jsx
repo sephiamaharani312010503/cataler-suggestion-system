@@ -19,7 +19,10 @@ const AdminDashboard = () => {
     const session = await getSession();
     if (!session) {
       router.push("/");
-    } else if (session && session?.user.role !== "Admin") {
+    } else if (
+      session &&
+      (session?.user.role !== "Admin") & (session?.user.role !== "Section Head")
+    ) {
       router.push("/dashboard/user");
     }
   };

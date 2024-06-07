@@ -67,7 +67,7 @@ const RegisterPage = () => {
           <div className="flex items-center justify-between mt-2 ">
             <p>
               Have an account? sign in
-              <Link href="/" className="text-secondary">
+              <Link href="/" className="text-secondary ms-1">
                 here
               </Link>
             </p>
