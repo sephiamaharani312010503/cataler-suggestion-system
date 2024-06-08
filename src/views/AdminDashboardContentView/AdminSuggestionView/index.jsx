@@ -10,17 +10,19 @@ import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 
 const AdminSuggestionView = () => {
   const {
+    isModalAttachmentDetailOpen,
     isModalAdminSuggestionDetailOpen,
     isModalSuggestionDeleteOpen,
     isModalStatusDetailOpen,
     isSuggestionAccView,
-    isSuggestionAllView,
+    isSuggestionDisapproveView,
     isStatClicked,
   } = useAllStateContext();
   const {
     modalDeleteSuggestion,
-    modalAdminSuggestionDetail,
+    modalAttachmentDetail,
     modalStatusDetail,
+    modalAdminSuggestionDetail,
   } = useModalFunctionContext();
   const {
     handleAccSuggestionView,
@@ -74,15 +76,15 @@ const AdminSuggestionView = () => {
                 </details>
               </div>
               <hr />
-              {isSuggestionAllView ? (
-                <AdminAllSuggestion />
+              {isSuggestionDisapproveView ? (
+                <AdminDisapproveSuggestionView />
               ) : isSuggestionAccView ? (
                 <AdminAccSuggestion />
               ) : (
-                <AdminDisapproveSuggestionView />
+                <AdminAllSuggestion />
               )}
-
               {isModalAdminSuggestionDetailOpen && modalAdminSuggestionDetail()}
+              {isModalAttachmentDetailOpen && modalAttachmentDetail()}
               {isModalSuggestionDeleteOpen && modalDeleteSuggestion()}
               {isModalStatusDetailOpen && modalStatusDetail()}
             </div>

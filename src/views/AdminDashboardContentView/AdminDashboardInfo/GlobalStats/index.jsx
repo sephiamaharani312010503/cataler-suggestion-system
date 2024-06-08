@@ -1,4 +1,5 @@
 import { useAllStateContext } from "@/context/AllStateContext";
+import { useSessionContext } from "@/context/SessionContext";
 
 const GlobalStats = () => {
   const {
@@ -11,6 +12,7 @@ const GlobalStats = () => {
     setIsSuggestionDisapproveView,
     setIsUserManagementView,
   } = useAllStateContext();
+  const { userRole } = useSessionContext();
   const suggestionAcc = allSuggestion.filter(
     (suggestion) => suggestion.status === "ACC"
   );
@@ -62,19 +64,23 @@ const GlobalStats = () => {
               {suggestionDisapprove.length}
             </div>
           </div>
-          <div
-            onClick={() => {
-              setIsStatUserClicked(true);
-              setIsUserManagementView(true);
-            }}
-            className="stat place-items-center cursor-pointer hover:shadow hover:shadow-lg hover:shadow-violet-300 hover:bg-violet-300/10">
-            <div className="stat-title text-violet-700 font-semibold">
-              Total User Terdaftar
+          {userRole === "Section Head" ? (
+            ""
+          ) : (
+            <div
+              onClick={() => {
+                setIsStatUserClicked(true);
+                setIsUserManagementView(true);
+              }}
+              className="stat place-items-center cursor-pointer hover:shadow hover:shadow-lg hover:shadow-violet-300 hover:bg-violet-300/10">
+              <div className="stat-title text-violet-700 font-semibold">
+                Total User Terdaftar
+              </div>
+              <div className="stat-value text-violet-700">
+                {allUserData.length}
+              </div>
             </div>
-            <div className="stat-value text-violet-700">
-              {allUserData.length}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

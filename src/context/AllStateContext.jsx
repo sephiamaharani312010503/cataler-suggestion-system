@@ -69,7 +69,7 @@ export const AllStateProvider = ({ children }) => {
   const [imageFile, setImageFile] = useState(null);
 
   const [isSuggestionAccView, setIsSuggestionAccView] = useState(false);
-  const [isSuggestionAllView, setIsSuggestionAllView] = useState(false);
+  const [isSuggestionAllView, setIsSuggestionAllView] = useState(true);
   const [isSuggestionDisapproveView, setIsSuggestionDisapproveView] =
     useState(false);
   const [isUserManagementView, setIsUserManagementView] = useState(false);

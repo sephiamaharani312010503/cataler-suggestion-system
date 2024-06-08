@@ -17,6 +17,7 @@ const AdminUserManagement = () => {
   const { setUserPoint, resetStatBtn } = useSuggestionDataContext();
   const { getAllUserData, getUserById } = useUserDataContext();
   const {
+    isModalAttachmentDetailOpen,
     allUserData,
     setIsModalAddUserOpen,
     isModalAddUserOpen,
@@ -25,8 +26,12 @@ const AdminUserManagement = () => {
     isModalUserDeleteOpen,
     isStatUserClicked,
   } = useAllStateContext();
-  const { modalAddUser, modalUserDetail, modalDeleteUser } =
-    useModalFunctionContext();
+  const {
+    modalAddUser,
+    modalUserDetail,
+    modalDeleteUser,
+    modalAttachmentDetail,
+  } = useModalFunctionContext();
 
   useEffect(() => {
     getAllUserData();
@@ -102,6 +107,7 @@ const AdminUserManagement = () => {
           {isModalAddUserOpen && modalAddUser()}
           {isModalUserDetailOpen && modalUserDetail()}
           {isModalUserDeleteOpen && modalDeleteUser()}
+          {isModalAttachmentDetailOpen && modalAttachmentDetail()}
         </div>
       }
     />

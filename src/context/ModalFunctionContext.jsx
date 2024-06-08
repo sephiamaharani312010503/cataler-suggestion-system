@@ -511,9 +511,16 @@ export const ModalFunctionContextProvider = ({ children }) => {
                 className="textarea textarea-bordered w-full"
                 readOnly
               />
-              <label className="label text-sm">Lampiran :</label>
-              <div className="flex justify-between mb-2">
-                <input className="input input-sm input-bordered" />
+              <div className="flex justify-between mb-2 mt-3">
+                <button
+                  onClick={() => setIsModalAttachmentDetailOpen(true)}
+                  type="button"
+                  className="link text-secondary ms-1 me-20">
+                  <FontAwesomeIcon icon={faPaperclip} />
+                  <span className="ms-1 italic font-semibold">
+                    Lihat Lampiran
+                  </span>
+                </button>
                 <div className="flex justify-end">
                   <button
                     onClick={handleDeleteSuggestionModal}
@@ -528,7 +535,7 @@ export const ModalFunctionContextProvider = ({ children }) => {
                   <button
                     onClick={updateStatus}
                     type="button"
-                    className="btn btn-sm btn-primary text-white me-2">
+                    className="btn btn-sm btn-primary text-white">
                     Confirm
                   </button>
                 </div>
