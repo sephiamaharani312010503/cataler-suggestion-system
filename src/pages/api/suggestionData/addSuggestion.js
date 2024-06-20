@@ -5,22 +5,26 @@ export default async function handlerAddSuggestion(req, res) {
     try {
       const {
         docId,
+        userName,
+        userNik,
+        userJabatan,
+        userDepartemen,
         title,
         currentCondition,
         suggestion,
-        userNik,
-        userName,
         category,
         status,
         date,
       } = req.body;
       const data = await addSuggestion(
         docId,
+        userName,
+        userNik,
+        userJabatan,
+        userDepartemen,
         title,
         currentCondition,
         suggestion,
-        userNik,
-        userName,
         category,
         status,
         date

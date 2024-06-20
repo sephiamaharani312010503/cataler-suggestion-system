@@ -19,7 +19,6 @@ export const HandleUploadImageContextProvider = ({ children }) => {
     setIsImage2Uploading,
     setImageBeforeUrl,
     setImageAfterUrl,
-    imageAfterUrl,
     setErrorMessageImageBefore,
     setErrorMessageImageAfter,
   } = useAllStateContext();
@@ -27,7 +26,7 @@ export const HandleUploadImageContextProvider = ({ children }) => {
   const handleChangeImageBefore = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.size / (1024 * 1024) > MAX_FILE_SIZE_MB) {
-      console.log(
+      alert(
         `File terlalu besar. Maksimum ukuran file adalah ${MAX_FILE_SIZE_MB} MB`
       );
       return;
@@ -38,7 +37,7 @@ export const HandleUploadImageContextProvider = ({ children }) => {
   const handleChangeImageAfter = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.size / (1024 * 1024) > MAX_FILE_SIZE_MB) {
-      console.log(
+      alert(
         `File terlalu besar. Maksimum ukuran file adalah ${MAX_FILE_SIZE_MB} MB`
       );
       return;
@@ -115,7 +114,18 @@ export const HandleUploadImageContextProvider = ({ children }) => {
     }
   };
 
+  const deleteImage = async (filePath) => {
+    try {
+      await axios.delete("/api/suggestionData/deleteImage", {
+        data: { filePath },
+      });
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
+  };
+
   const contextValue = {
+    deleteImage,
     handleChangeImageBefore,
     handleChangeImageAfter,
     uploadImageBefore,

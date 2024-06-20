@@ -21,6 +21,8 @@ export const AllStateProvider = ({ children }) => {
 
   const [selectedName, setSelectedName] = useState("");
   const [selectedNik, setSelectedNik] = useState("");
+  const [selectedJabatan, setSelectedJabatan] = useState("");
+  const [selectedDepartemen, setSelectedDepartemen] = useState("");
 
   const [editName, setEditName] = useState("");
   const [editNik, setEditNik] = useState("");
@@ -88,6 +90,7 @@ export const AllStateProvider = ({ children }) => {
   const [lastDocId, setLastDocId] = useState("");
   const [imageBeforeUrl, setImageBeforeUrl] = useState("");
   const [imageAfterUrl, setImageAfterUrl] = useState("");
+  const [imageName, setImageName] = useState("");
 
   const [isImage1Uploading, setIsImage1Uploading] = useState(false);
   const [isImage2Uploading, setIsImage2Uploading] = useState(false);
@@ -98,6 +101,8 @@ export const AllStateProvider = ({ children }) => {
   const contextValue = {
     dateNow,
     setDateNow,
+    imageName,
+    setImageName,
     allSuggestion,
     allUserSuggestion,
     setAllSuggestion,
@@ -129,11 +134,15 @@ export const AllStateProvider = ({ children }) => {
     selectedCurrentCondition,
     selectedName,
     selectedNik,
+    selectedJabatan,
+    selectedDepartemen,
     setSelectedCurrentCondition,
     selectedSuggestion,
     setSelectedSuggestion,
     setSelectedName,
     setSelectedNik,
+    setSelectedJabatan,
+    setSelectedDepartemen,
     docId,
     setDocId,
     isModalSuggestionDeleteOpen,

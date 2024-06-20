@@ -1,5 +1,11 @@
 import fs from "fs";
-import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  getStorage,
+  deleteObject,
+} from "firebase/storage";
 import {
   collection,
   addDoc,
@@ -48,4 +54,14 @@ export async function uploadImageAfter(fileObject, lastDocId) {
   });
 
   return { url: downloadURL };
+}
+
+export async function deleteImage(filePath) {
+  const fileRef = ref(storage, filePath);
+  try {
+    await deleteObject(fileRef);
+  } catch (error) {
+    console.error(`Error deleting file at ${filePath}:`, error);
+    throw error;
+  }
 }

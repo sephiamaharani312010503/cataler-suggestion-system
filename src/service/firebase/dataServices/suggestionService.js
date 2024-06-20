@@ -17,11 +17,13 @@ const firestore = getFirestore(app);
 
 export async function addSuggestion(
   docId,
+  userName,
+  userNik,
+  userJabatan,
+  userDepartemen,
   title,
   currentCondition,
   suggestion,
-  userNik,
-  userName,
   category,
   status,
   date
@@ -29,11 +31,13 @@ export async function addSuggestion(
   try {
     const docRef = doc(firestore, "suggestionData", docId);
     await updateDoc(docRef, {
+      name: userName,
+      nik: userNik,
+      jabatan: userJabatan,
+      departemen: userDepartemen,
       title: title,
       currentCondition: currentCondition,
       suggestion: suggestion,
-      userNik: userNik,
-      userName: userName,
       category: category,
       status: status,
       date: date,
@@ -62,7 +66,7 @@ export async function setUserPoint(userNik) {
     const allSuggestionRef = collection(firestore, "suggestionData");
     const q1 = query(
       allSuggestionRef,
-      where("userNik", "==", userNik),
+      where("nik", "==", userNik),
       where("status", "==", "ACC")
     );
     const snapshot = await getDocs(q1);
@@ -133,7 +137,7 @@ export async function getAllSuggestion() {
 export async function getSuggestionByUserName(userNik) {
   try {
     const docRef = collection(firestore, "suggestionData");
-    const q = query(docRef, where("userNik", "==", userNik));
+    const q = query(docRef, where("nik", "==", userNik));
     const snapshot = await getDocs(q);
     const subSuggestionData = [];
     snapshot.forEach((doc) => {

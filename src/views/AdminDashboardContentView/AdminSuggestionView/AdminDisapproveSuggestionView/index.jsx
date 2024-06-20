@@ -28,8 +28,8 @@ const AdminDisapproveSuggestionView = () => {
           .map((item, index) => (
             <tr key={item.id} className="hover:bg-gray-100">
               <td className="text-center ">{index + 1}</td>
-              <td>{item.userNik}</td>
-              <td>{item.userName}</td>
+              <td>{item.nik}</td>
+              <td>{item.name}</td>
               <td>{item.title}</td>
               <td className="text-center ">
                 {format(new Date(item.date), "dd/MM/yyyy")}

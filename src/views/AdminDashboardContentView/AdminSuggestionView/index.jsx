@@ -1,7 +1,11 @@
 import AdminContentLayout from "@/components/Layout/AdminDashboardLayout";
 import { useAllStateContext } from "@/context/AllStateContext";
 import { useModalFunctionContext } from "@/context/ModalFunctionContext";
-import { faCaretDown, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faFileExport,
+  faLeftLong,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminAccSuggestion from "./AdminAccSuggestionView";
 import AdminDisapproveSuggestionView from "./AdminDisapproveSuggestionView";
@@ -29,6 +33,7 @@ const AdminSuggestionView = () => {
     handleAllSuggestionView,
     handleDisapproveSuggestionView,
     resetStatBtn,
+    exportToPdf,
   } = useSuggestionDataContext();
 
   return (
@@ -51,29 +56,40 @@ const AdminSuggestionView = () => {
                   <p className="font-bold">Kelola Saran</p>
                 )}
 
-                <details className="dropdown dropdown-left me-6">
-                  <summary className="btn btn-sm btn-outline">
-                    Status
-                    <FontAwesomeIcon icon={faCaretDown} />
-                  </summary>
-                  <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                    <li
-                      onClick={handleAllSuggestionView}
-                      className="cursor-pointer font-semibold hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
-                      Semua Saran
-                    </li>
-                    <li
-                      onClick={handleAccSuggestionView}
-                      className="cursor-pointer font-semibold hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
-                      ACC
-                    </li>
-                    <li
-                      onClick={handleDisapproveSuggestionView}
-                      className="cursor-pointer font-semibold  hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
-                      Disapprove
-                    </li>
-                  </ul>
-                </details>
+                <div className="flex">
+                  <button
+                    onClick={exportToPdf}
+                    className="btn btn-sm btn-outline me-3">
+                    <span>
+                      <FontAwesomeIcon icon={faFileExport} />
+                    </span>
+                    PDF
+                  </button>
+
+                  <details className="dropdown dropdown-left me-4">
+                    <summary className="btn btn-sm btn-outline">
+                      Status
+                      <FontAwesomeIcon icon={faCaretDown} />
+                    </summary>
+                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                      <li
+                        onClick={handleAllSuggestionView}
+                        className="cursor-pointer font-semibold hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
+                        Semua Saran
+                      </li>
+                      <li
+                        onClick={handleAccSuggestionView}
+                        className="cursor-pointer font-semibold hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
+                        ACC
+                      </li>
+                      <li
+                        onClick={handleDisapproveSuggestionView}
+                        className="cursor-pointer font-semibold  hover:bg-gray-300 hover:rounded py-1 px-2 me-3">
+                        Disapprove
+                      </li>
+                    </ul>
+                  </details>
+                </div>
               </div>
               <hr />
               {isSuggestionDisapproveView ? (

@@ -65,7 +65,9 @@ export const ModalFunctionContextProvider = ({ children }) => {
     isImage1Uploading,
     isImage2Uploading,
     imageBeforeUrl,
+    setImageBeforeUrl,
     imageAfterUrl,
+    setImageAfterUrl,
     imageBefore,
     imageAfter,
     errorMessageImageBefore,
@@ -73,8 +75,6 @@ export const ModalFunctionContextProvider = ({ children }) => {
     errorMessageImageAfter,
     setErrorMessageImageAfter,
     setIsModalAttachmentDetailOpen,
-    setImageBeforeUrl,
-    setImageAfterUrl,
   } = useAllStateContext();
 
   const {
@@ -614,6 +614,8 @@ export const ModalFunctionContextProvider = ({ children }) => {
                 onClick={() => {
                   setErrorMessageImageBefore("");
                   setErrorMessageImageAfter("");
+                  setImageBeforeUrl("");
+                  setImageAfterUrl("");
                   setIsModalAttachmentOpen(false);
                 }}
                 className="me-1">
@@ -713,6 +715,8 @@ export const ModalFunctionContextProvider = ({ children }) => {
                 onClick={() => {
                   setErrorMessageImageBefore("");
                   setErrorMessageImageAfter("");
+                  setImageBeforeUrl("");
+                  setImageAfterUrl("");
                   setIsModalAttachmentOpen(false);
                 }}
                 className="btn btn-sm btn-primary text-white mt-3">

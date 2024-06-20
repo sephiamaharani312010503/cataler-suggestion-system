@@ -27,15 +27,15 @@ export default function App({
         <SessionContextProvider>
           <AllStateProvider>
             <UserDataContextProvider>
-              <SuggestionDataContextProvider>
-                <HandleUploadImageContextProvider>
+              <HandleUploadImageContextProvider>
+                <SuggestionDataContextProvider>
                   <ModalFunctionContextProvider>
                     <Navbar />
                     <Component {...pageProps} />
                     <Footer />
                   </ModalFunctionContextProvider>
-                </HandleUploadImageContextProvider>
-              </SuggestionDataContextProvider>
+                </SuggestionDataContextProvider>
+              </HandleUploadImageContextProvider>
             </UserDataContextProvider>
           </AllStateProvider>
         </SessionContextProvider>
