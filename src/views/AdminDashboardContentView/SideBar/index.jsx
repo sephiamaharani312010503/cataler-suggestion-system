@@ -2,6 +2,7 @@ import { useAllStateContext } from "@/context/AllStateContext";
 import { useSessionContext } from "@/context/SessionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import ProfileImage from "@/views/UserProfileView/ProfileImage";
+import { faFilePdf } from "@fortawesome/free-regular-svg-icons";
 import {
   faHouse,
   faListCheck,
@@ -18,6 +19,8 @@ const AdminSideBar = () => {
     isUserManageBtnActive,
     setIsDashboardBtnActive,
     isDashboardBtnActive,
+    isReportBtnActive,
+    setIsReportBtnActive,
   } = useAllStateContext();
 
   const { resetStatBtn } = useSuggestionDataContext();
@@ -27,6 +30,7 @@ const AdminSideBar = () => {
     setIsUserManageBtnActive(true);
     setIsSuggestionManageBtnActive(false);
     setIsDashboardBtnActive(false);
+    setIsReportBtnActive(false);
   };
 
   const handleSuggestionManageBtn = () => {
@@ -34,11 +38,21 @@ const AdminSideBar = () => {
     setIsSuggestionManageBtnActive(true);
     setIsUserManageBtnActive(false);
     setIsDashboardBtnActive(false);
+    setIsReportBtnActive(false);
   };
 
   const handleDashboardBtn = () => {
     resetStatBtn();
     setIsDashboardBtnActive(true);
+    setIsSuggestionManageBtnActive(false);
+    setIsUserManageBtnActive(false);
+    setIsReportBtnActive(false);
+  };
+
+  const handleReportBtn = () => {
+    resetStatBtn();
+    setIsReportBtnActive(true);
+    setIsDashboardBtnActive(false);
     setIsSuggestionManageBtnActive(false);
     setIsUserManageBtnActive(false);
   };
@@ -101,6 +115,17 @@ const AdminSideBar = () => {
               </div>
             </div>
           )}
+          <hr />
+          <div
+            onClick={handleReportBtn}
+            className={`w-full px-1 ${
+              isReportBtnActive ? "bg-gray-300" : ""
+            } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
+            <div className="px-2">
+              <FontAwesomeIcon icon={faFilePdf} />
+              <span className="ms-2">Laporan</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

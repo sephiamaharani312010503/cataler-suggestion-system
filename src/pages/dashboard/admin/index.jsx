@@ -8,12 +8,17 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AdminSuggestionView from "@/views/AdminDashboardContentView/AdminSuggestionView";
+import AdminReportView from "@/views/AdminDashboardContentView/AdminReportView";
 
 const AdminDashboard = () => {
   const router = useRouter();
   const { session } = useSessionContext();
   const { getAllSuggestion } = useSuggestionDataContext();
-  const { isUserManageBtnActive, isDashboardBtnActive } = useAllStateContext();
+  const {
+    isUserManageBtnActive,
+    isDashboardBtnActive,
+    isSuggestionManageBtnActive,
+  } = useAllStateContext();
 
   const checkAuth = async () => {
     const session = await getSession();
@@ -45,8 +50,10 @@ const AdminDashboard = () => {
           <AdminUserManagement />
         ) : isDashboardBtnActive ? (
           <AdminDashboardInfo />
-        ) : (
+        ) : isSuggestionManageBtnActive ? (
           <AdminSuggestionView />
+        ) : (
+          <AdminReportView />
         )}
       </div>
     </div>

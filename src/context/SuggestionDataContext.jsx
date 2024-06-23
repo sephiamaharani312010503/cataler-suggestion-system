@@ -314,7 +314,7 @@ export const SuggestionDataContextProvider = ({ children }) => {
       const currentDate = getCurrentDate();
 
       doc.setFontSize(18);
-      doc.text("Data Suggestion System", 78, 50);
+      doc.text("Data Kaizen System", 78, 50);
 
       const combinedData = allSuggestion.map((suggestion) => {
         const users = allUserData.find((data) => data.nik === suggestion.nik);

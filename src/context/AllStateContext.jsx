@@ -61,6 +61,7 @@ export const AllStateProvider = ({ children }) => {
   const [isSuggestionManageBtnActive, setIsSuggestionManageBtnActive] =
     useState(false);
   const [isDashboardBtnActive, setIsDashboardBtnActive] = useState(true);
+  const [isReportBtnActive, setIsReportBtnActive] = useState(true);
 
   const [addedUserDepartemen, setAddedUserDepartemen] = useState("");
   const [addedUserJabatan, setAddedUserJabatan] = useState("");
@@ -233,6 +234,8 @@ export const AllStateProvider = ({ children }) => {
     setErrorMessageImageAfter,
     isModalAttachmentDetailOpen,
     setIsModalAttachmentDetailOpen,
+    isReportBtnActive,
+    setIsReportBtnActive,
   };
 
   return (
