@@ -273,100 +273,119 @@ export const SuggestionDataContextProvider = ({ children }) => {
     }
   };
 
-  const exportToPdf = () => {
-    const doc = new jsPDF();
+  const exportToPdf = async (itemId) => {
+    try {
+      const response = await axios.get(
+        `/api/suggestionData/getSuggestionById?docId=${itemId}`
+      );
 
-    const addHeader = () => {
-      const img = new Image();
-      const logoUrl = "/static/assets/logo-single.jpg";
-      img.src = logoUrl;
+      const doc = new jsPDF();
 
-      img.onload = () => {
-        doc.addImage(img, "jpg", 12.5, 8, 30, 15);
-        doc.setFont("Poppins");
-        doc.setFontSize(18);
-        doc.text("PT Cataler Indonesia", 45, 18);
-        doc.setFontSize(11);
-        doc.text(
-          "Blok AE No. 2 Greenland Internasional Industrial Center ( GIIC)",
-          13,
-          25
-        );
-        doc.text("Kota Deltamas, Jl. Tol Jakarta-Cikampek, Km.37", 13, 30);
-        doc.text("Cikarang Pusat, Bekasi, Indonesia", 13, 35);
-        doc.setLineWidth(0.3);
-        doc.line(13, 38, 200, 38);
+      const addHeader = () => {
+        const img = new Image();
+        const logoUrl = "/static/assets/logo-single.jpg";
+        img.src = logoUrl;
 
-        addContent();
-      };
-    };
+        img.onload = () => {
+          doc.addImage(img, "jpg", 12.5, 8, 30, 15);
+          doc.setFont("Poppins");
+          doc.setFontSize(18);
+          doc.text("PT Cataler Indonesia", 45, 18);
+          doc.setFontSize(11);
+          doc.text(
+            "Blok AE No. 2 Greenland Internasional Industrial Center ( GIIC)",
+            13,
+            25
+          );
+          doc.text("Kota Deltamas, Jl. Tol Jakarta-Cikampek, Km.37", 13, 30);
+          doc.text("Cikarang Pusat, Bekasi, Indonesia", 13, 35);
+          doc.setLineWidth(0.3);
+          doc.line(13, 38, 200, 38);
 
-    const addContent = () => {
-      const getCurrentDate = () => {
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, "0");
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const year = today.getFullYear();
-
-        return `${day}/${month}/${year}`;
-      };
-
-      const currentDate = getCurrentDate();
-
-      doc.setFontSize(18);
-      doc.text("Data Kaizen System", 78, 50);
-
-      const combinedData = allSuggestion.map((suggestion) => {
-        const users = allUserData.find((data) => data.nik === suggestion.nik);
-        return {
-          ...suggestion,
-          ...users,
+          addContent();
         };
-      });
+      };
 
-      doc.autoTable({
-        startX: 10,
-        startY: 55,
-        head: [["NIK", "Nama", "Judul Saran", "Point", "Status", "Tanggal"]],
-        body: combinedData.map((item) => [
-          item.nik,
-          item.name,
-          item.title,
-          item.point,
-          item.status,
-          format(Date(item.date), "dd/MM/yyyy"),
-        ]),
-        theme: "grid",
-        headStyles: { fillColor: [22, 160, 133], halign: "center" },
-        columnStyles: {
-          0: { halign: "center" },
-          1: { halign: "center" },
-          2: { halign: "left" },
-          3: { halign: "center" },
-          4: { halign: "center" },
-          5: { halign: "center" },
-        },
-        styles: { font: "times", fontSize: 12 },
-      });
+      const addContent = () => {
+        const getCurrentDate = () => {
+          const today = new Date();
+          const day = String(today.getDate()).padStart(2, "0");
+          const month = String(today.getMonth() + 1).padStart(2, "0");
+          const year = today.getFullYear();
 
-      doc.setFontSize(12);
-      doc.text("Bekasi,", 162, 200);
-      doc.text(currentDate, 176, 200);
-      doc.text("Section Head", 168, 234);
+          return `${day}/${month}/${year}`;
+        };
 
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.text(
-          `Page ${i} of ${pageCount}`,
-          14,
-          doc.internal.pageSize.height - 10
-        );
-      }
-      doc.save("report.pdf");
-    };
+        const currentDate = getCurrentDate();
 
-    addHeader();
+        doc.setFontSize(18);
+        doc.text("Data Kaizen System", 78, 50);
+
+        doc.autoTable({
+          startX: 10,
+          startY: 55,
+          head: [["NIK", "Nama"]],
+          body: [[response.data.nik, response.data.name]],
+          theme: "grid",
+          headStyles: { fillColor: [22, 160, 133], halign: "center" },
+          columnStyles: {
+            0: { halign: "center" },
+            1: { halign: "center" },
+            2: { halign: "left" },
+            3: { halign: "center" },
+            4: { halign: "center" },
+            5: { halign: "center" },
+          },
+          styles: { font: "times", fontSize: 12 },
+        });
+
+        doc.autoTable({
+          startX: 10,
+          startY: 75,
+          head: [["Judul"]],
+          body: [[response.data.title]],
+          theme: "grid",
+          headStyles: { fillColor: [22, 160, 133], halign: "center" },
+          columnStyles: {
+            0: { halign: "left" },
+          },
+          styles: { font: "times", fontSize: 12 },
+        });
+
+        doc.autoTable({
+          startX: 10,
+          startY: 95,
+          head: [["Kondisi Saat Ini", "Saran Yang Diusulkan"]],
+          body: [[response.data.currentCondition, response.data.suggestion]],
+          theme: "grid",
+          headStyles: { fillColor: [22, 160, 133], halign: "center" },
+          columnStyles: {
+            0: { halign: "left" },
+          },
+          styles: { font: "times", fontSize: 12 },
+        });
+
+        doc.setFontSize(12);
+        doc.text("Bekasi,", 162, 200);
+        doc.text(currentDate, 176, 200);
+        doc.text("Section Head", 168, 234);
+
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          doc.setPage(i);
+          doc.text(
+            `Page ${i} of ${pageCount}`,
+            14,
+            doc.internal.pageSize.height - 10
+          );
+        }
+        doc.save("report.pdf");
+      };
+
+      addHeader();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const contextValue = {

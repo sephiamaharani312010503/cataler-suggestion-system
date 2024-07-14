@@ -18,6 +18,8 @@ const AdminDashboard = () => {
     isUserManageBtnActive,
     isDashboardBtnActive,
     isSuggestionManageBtnActive,
+    isReportBtnActive,
+    setIsReportBtnActive,
   } = useAllStateContext();
 
   const checkAuth = async () => {

@@ -57,15 +57,6 @@ const AdminSuggestionView = () => {
                 )}
 
                 <div className="flex">
-                  <button
-                    onClick={exportToPdf}
-                    className="btn btn-sm btn-outline me-3">
-                    <span>
-                      <FontAwesomeIcon icon={faFileExport} />
-                    </span>
-                    PDF
-                  </button>
-
                   <details className="dropdown dropdown-left me-4">
                     <summary className="btn btn-sm btn-outline">
                       Status
