@@ -104,28 +104,30 @@ const AdminSideBar = () => {
           {userRole == "Section Head" ? (
             ""
           ) : (
-            <div
-              onClick={handleUserManageBtn}
-              className={`w-full px-1 ${
-                isUserManageBtnActive ? "bg-gray-300" : ""
-              } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
-              <div className="px-1">
-                <FontAwesomeIcon icon={faUsersGear} />
-                <span className="ms-2">Kelola User</span>
+            <>
+              <div
+                onClick={handleUserManageBtn}
+                className={`w-full px-1 ${
+                  isUserManageBtnActive ? "bg-gray-300" : ""
+                } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
+                <div className="px-1">
+                  <FontAwesomeIcon icon={faUsersGear} />
+                  <span className="ms-2">Kelola User</span>
+                </div>
               </div>
-            </div>
+              <hr />
+              <div
+                onClick={handleReportBtn}
+                className={`w-full px-1 ${
+                  isReportBtnActive ? "bg-gray-300" : ""
+                } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
+                <div className="px-2">
+                  <FontAwesomeIcon icon={faFilePdf} />
+                  <span className="ms-2">Laporan</span>
+                </div>
+              </div>
+            </>
           )}
-          <hr />
-          <div
-            onClick={handleReportBtn}
-            className={`w-full px-1 ${
-              isReportBtnActive ? "bg-gray-300" : ""
-            } hover:bg-gray-200 rounded py-2 cursor-pointer font-semibold`}>
-            <div className="px-2">
-              <FontAwesomeIcon icon={faFilePdf} />
-              <span className="ms-2">Laporan</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

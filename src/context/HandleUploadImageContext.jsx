@@ -4,7 +4,7 @@ import axios from "axios";
 
 const HandleUploadImageContext = createContext();
 
-const MAX_FILE_SIZE_MB = 1;
+const MAX_FILE_SIZE_MB = 3;
 
 export const HandleUploadImageContextProvider = ({ children }) => {
   const {

@@ -23,8 +23,6 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setCurrentCondition,
     setSuggestion,
     setCategory,
-    allSuggestion,
-    allUserData,
     setAllSuggestion,
     setAllUserSuggestion,
     setIsModalSuggestionDetailOpen,
@@ -63,14 +61,8 @@ export const SuggestionDataContextProvider = ({ children }) => {
     setIsImageBeforeUploaded,
     setImageBeforeUrl,
     setImageAfterUrl,
-    selectedName,
-    selectedJabatan,
-    selectedDepartemen,
     imageName,
     setImageName,
-    imageBeforeUrl,
-    imageAfterUrl,
-    selectedDate,
     setSelectedJabatan,
     setSelectedDepartemen,
   } = useAllStateContext();
@@ -318,43 +310,36 @@ export const SuggestionDataContextProvider = ({ children }) => {
 
         const currentDate = getCurrentDate();
 
+        const formattedDate = format(Date(response.data.date), "dd/MM/yyyy");
+
         doc.setFontSize(18);
         doc.text("Data Kaizen System", 78, 50);
 
+        doc.setFontSize(12);
+        doc.text("Nama", 14, 60);
+        doc.text(`: ${response.data.name}`, 40, 60);
+        doc.text("NIK", 14, 67);
+        doc.text(`: ${response.data.nik}`, 40, 67);
+        doc.text("Tanggal ", 14, 74);
+        doc.text(`: ${formattedDate}`, 40, 74);
+
         doc.autoTable({
           startX: 10,
-          startY: 55,
-          head: [["NIK", "Nama"]],
-          body: [[response.data.nik, response.data.name]],
+          startY: 80,
+          head: [["Kategori", "Judul"]],
+          body: [[response.data.category, response.data.title]],
           theme: "grid",
           headStyles: { fillColor: [22, 160, 133], halign: "center" },
           columnStyles: {
             0: { halign: "center" },
-            1: { halign: "center" },
-            2: { halign: "left" },
-            3: { halign: "center" },
-            4: { halign: "center" },
-            5: { halign: "center" },
+            1: { halign: "left" },
           },
           styles: { font: "times", fontSize: 12 },
         });
 
         doc.autoTable({
           startX: 10,
-          startY: 75,
-          head: [["Judul"]],
-          body: [[response.data.title]],
-          theme: "grid",
-          headStyles: { fillColor: [22, 160, 133], halign: "center" },
-          columnStyles: {
-            0: { halign: "left" },
-          },
-          styles: { font: "times", fontSize: 12 },
-        });
-
-        doc.autoTable({
-          startX: 10,
-          startY: 95,
+          startY: 100,
           head: [["Kondisi Saat Ini", "Saran Yang Diusulkan"]],
           body: [[response.data.currentCondition, response.data.suggestion]],
           theme: "grid",

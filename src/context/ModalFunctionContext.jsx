@@ -358,40 +358,17 @@ export const ModalFunctionContextProvider = ({ children }) => {
             <hr className="mt-1" />
             <form onSubmit={updateSuggestion}>
               <div className="form-control">
-                <div className="flex justify-center mt-3">
-                  <div className="flex">
-                    <label className="label cursor-pointer">
-                      <input
-                        onChange={() => handleEditRadioChange("5S")}
-                        checked={selectedCategory === "5S"}
-                        type="radio"
-                        className="radio checked:bg-green-500"
-                      />
-                      <span className="label-text text-emerald-600 font-semibold ms-1">
-                        5S
-                      </span>
-                      <input
-                        onChange={() => handleEditRadioChange("Safety")}
-                        checked={selectedCategory === "Safety"}
-                        type="radio"
-                        className="radio checked:bg-warning ms-3"
-                      />
-                      <span className="label-text ms-1 text-yellow-500 font-semibold">
-                        Safety
-                      </span>
-                      <input
-                        onChange={() => handleEditRadioChange("Improvement")}
-                        checked={selectedCategory === "Improvement"}
-                        type="radio"
-                        className="radio checked:bg-blue-500 ms-3"
-                      />
-                      <span className="label-text ms-1 text-blue-500 font-semibold">
-                        Improvement
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div className="flex justify-center mt-2"></div>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full select select-sm select-bordered mt-2">
+                  <option disabled>Pilih Kategori</option>
+                  <option value="5S">5S</option>
+                  <option value="Safety">Safety</option>
+                  <option value="Improvement">Improvement</option>
+                  <option value="HSE">HSE</option>
+                  <option value="Quality">Quality</option>
+                </select>
                 <label className="label text-sm">Judul :</label>
                 <input
                   value={selectedTitle}

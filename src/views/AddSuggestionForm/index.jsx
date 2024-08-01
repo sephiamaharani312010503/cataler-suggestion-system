@@ -1,9 +1,8 @@
 import { useAllStateContext } from "@/context/AllStateContext";
-import { useHandleUploadImageContext } from "@/context/HandleUploadImageContext";
 import { useModalFunctionContext } from "@/context/ModalFunctionContext";
 import { useSuggestionDataContext } from "@/context/SuggestionDataContext";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
-import { faCircleCheck, faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AddSuggestionForm = () => {
@@ -15,6 +14,7 @@ const AddSuggestionForm = () => {
     setCurrentCondition,
     setSuggestion,
     category,
+    setCategory,
     isAddBtnLoading,
     date,
     setDate,
@@ -44,47 +44,17 @@ const AddSuggestionForm = () => {
           <hr />
           <div className="form-control">
             <div className="flex justify-center mt-3">
-              <div className="container flex justify-center w-full border bg-white rounded-lg">
-                <div>
-                  <label className="label cursor-pointer">
-                    <input
-                      onChange={() => handleRadioChange("5S")}
-                      checked={category === "5S"}
-                      type="radio"
-                      className="radio checked:bg-green-500 border-2 border-green-700"
-                    />
-                    <span className="label-text text-emerald-600 font-semibold ms-1">
-                      5S
-                    </span>
-                  </label>
-                </div>
-                <div>
-                  <label className="label cursor-pointer">
-                    <input
-                      onChange={() => handleRadioChange("Safety")}
-                      checked={category === "Safety"}
-                      type="radio"
-                      className="radio checked:bg-warning ms-3 border-2 border-yellow-500"
-                    />
-                    <span className="label-text ms-1 text-yellow-500 font-semibold">
-                      Safety
-                    </span>
-                  </label>
-                </div>
-                <div>
-                  <label className="label cursor-pointer">
-                    <input
-                      onChange={() => handleRadioChange("Improvement")}
-                      checked={category === "Improvement"}
-                      type="radio"
-                      className="radio checked:bg-blue-500 ms-3 border-2 border-blue-700"
-                    />
-                    <span className="label-text ms-1 text-blue-500 font-semibold">
-                      Improvement
-                    </span>
-                  </label>
-                </div>
-              </div>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full select select-sm select-bordered">
+                <option>Pilih Kategori</option>
+                <option value="5S">5S</option>
+                <option value="Safety">Safety</option>
+                <option value="Improvement">Improvement</option>
+                <option value="HSE">HSE</option>
+                <option value="Quality">Quality</option>
+              </select>
             </div>
             <label className="label text-sm text-gray-600 font-bold">
               Judul :
