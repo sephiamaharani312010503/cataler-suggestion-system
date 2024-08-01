@@ -12,7 +12,7 @@ const formidableConfig = {
   multiples: false,
   keepExtensions: true,
   allowEmptyFiles: false,
-  maxFileSize: 1_000_000, // 1 MB
+  maxFileSize: 3000_000, // 3 MB
   maxFieldsSize: 10_000_000, // 10 MB
 };
 
